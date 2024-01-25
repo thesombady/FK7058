@@ -1,0 +1,298 @@
+\documentclass[a4paper]{article}
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage{mdframed}
+\usepackage{systeme,}
+\usepackage{lipsum}
+\usepackage{relsize}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{shapes.geometric}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=newest}%1.7}
+\usepackage{harpoon}%
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{authblk}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{chngcntr}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{commath}
+\usepackage{hyperref}%Might remove, adds link to each reference
+\usepackage{url}
+\usepackage{calligra}
+
+% Commands
+
+\newcommand{\w}{\omega}
+\newcommand{\curl}[1]{\mathbf{\nabla}\times \mathbf{#1}}
+\newcommand{\grad}{\mathbf{\nabla}}
+\newcommand{\dive}[1]{\mathbf{\nabla}\cdot \mathbf{#1}}
+%\newcommand{\crr}{\mathfrak{r}}
+\newcommand{\res}[2]{\text{Res}(#1,#2)}
+\newcommand{\laplace}{\nabla^2}
+\newcommand{\trace}{\text{Tr}}
+\newcommand{\fpartial}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\rot}[3]{\begin{vmatrix}\hat{x}&\hat{y}&\hat{z}\\\partial_x&\partial_y&\partial_z\\#1&#2&#3 \end{vmatrix}}
+
+% Special character commands
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+\newcommand{\crr}{\mathcalligra{r}\,}
+\newcommand{\boldscriptr}{\pmb{\mathcalligra{r}}\,}
+\newcommand{\average}[1]{\langle #1 \rangle}
+\newcommand{\newparagraph}{\vspace{.5cm}\noindent}
+
+\newcommand{\f}{\mathcal{F}}
+
+
+
+\title{Statistical physics: Handin 1}
+\author{Author : Andreas Evensen}
+\date{Date: \today}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\maketitle
+
+\section*{Task 1}
+Given a harmonic oscillator, with angular frequency $\w_0$; with the classical definition of $H$:
+\begin{align*}
+    H = \frac{p^2}{2m} + \frac{1}{2}m\w_0^2x^2.
+\end{align*}
+
+\subsection*{a)}
+Calculate the Canonical partition function $Z$ for the harmonic oscillator.
+
+\vspace*{0.5cm}\noindent
+The partition function, in a continuous canonical ensemble, is given by:
+\begin{align*}
+    Z &= \frac{1}{h}\int_{-\infty}^\infty dq \int_{-\infty}^{\infty} dp\left[ e^{-\beta H(q,p)}\right]\\
+    &= \frac{1}{h}\int_{-\infty}^{\infty} dx \int_{-\infty}^\infty dp\left[ \exp\left\{-\beta\left[\frac{p^2}{2m} + \frac{1}{2}m\w_0^2x^2\right]\right\}\right]\\
+    &= \frac{1}{h}\int_{-\infty}^{\infty} dx \exp\left[-\frac{\beta m\w_0^2x^2}{2}\right]\int_{-\infty}^{\infty} dp\exp\left[-\beta\left[\frac{p^2}{2m}\right]\right]\\
+    &= \frac{1}{h}\left(\frac{2\pi}{\beta\w_0}\right).
+\end{align*}
+
+\subsection*{b)}
+Calculate the average energy, $\langle E \rangle$ and the specific heat capacity.
+
+\vspace*{0.5cm}\noindent
+The average energy is given by:
+\begin{align*}
+    \average{E} &= -\frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
+    &= -\frac{h\beta\w_0}{2\pi}\cdot\left(-\frac{1}{h}\frac{2\pi}{\beta^2\w_0}\right)\\
+    &= \frac{1}{\beta}.
+\end{align*}The specific heat capacity $C_v$ is computed accordingly:
+\begin{align*}
+    C_v &= \frac{\partial \average{E}}{\partial T}\\
+    &= \frac{\partial}{\partial T} \left(k_bT\right) = k_b.
+\end{align*}
+
+\section*{Task 2}
+The same oscillator as in the previous task, but with a quantum mechanical point of view leads to the eigenvalues:
+\begin{align*}
+    E_n = \left(n + \frac{1}{2}\right)hf,
+\end{align*}where $f$ is the natural frequency of the oscillator.
+
+\subsection*{a)}
+Evaluate the partition function $Z$, for a single harmonic oscillator.
+
+\vspace*{0.5cm}\noindent
+The partition function is now discrete and thus is given by:
+\begin{align}
+    Z &= \sum_{n=0}^\infty e^{-\beta E_n}\nonumber\\
+    &= \sum_{n=0}^\infty \exp\left[-\beta\left(n + \frac{1}{2}\right)hf\right]\nonumber\\
+    &=\exp\left[-\frac{\beta hf}{2}\right]\sum_{n=0}^\infty \exp\left[-\beta nhf\right]\nonumber\\
+    &= \exp\left[-\frac{\beta hf}{2}\right]\frac{1}{1-\exp\left[-\beta hf\right]}.\label{eq: Parition function}
+\end{align}
+
+
+\subsection*{b)}
+From the partition function, find the average energy $\langle E \rangle$ at a temperature $T$. Also take the limit $T\to\infty$.
+
+\vspace*{0.5cm}\noindent
+Using eq. \eqref{eq: Parition function} we can compute the average energy:
+\begin{align*}
+   \average{E} &= -\frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
+   &= -\left[\exp\left[-\frac{\beta hf}{2}\right]\frac{1}{1-\exp\left[-\beta hf\right]}\right]^{-1}\frac{\partial}{\partial \beta}\left(\exp\left[-\frac{\beta hf}{2}\right]\frac{1}{1-\exp\left[-\beta hf\right]}\right)\\
+   &= \left\{\frac{\partial}{\partial \beta}\left(\exp\left[-\frac{\beta hf}{2}\right]\right)\cdot \frac{1}{1-\exp\left[-\beta hf\right]}+\frac{\partial}{\partial \beta}\left(\frac{1}{1-\exp\left[-\beta hf\right]}\right)\cdot \exp\left[-\frac{\beta hf}{2}\right]\right\}\\
+   &\cdot(-1)\left[\frac{1-\exp\left[-\beta hf\right]}{\exp\left[-\frac{\beta hf}{2}\right]}\right]\\
+   &= \left\{-\frac{hf}{2\left(1-\exp\left[-\beta hf\right]\right)}\exp\left[-\frac{\beta hf}{2}\right] - \frac{hf\exp\left[\beta hf\right]}{\left(\exp\left[\beta hf\right] - 1\right)^2}\cdot\exp\left[-\frac{\beta hf}{2}\right]\right\}\\
+   &\cdot(-1)\left[\frac{1-\exp\left[-\beta hf\right]}{\exp\left[-\frac{\beta hf}{2}\right]}\right]\\
+   &= \left\{\frac{1}{2} + \frac{\left(1-\exp\left[-\beta hf\right]\right)\cdot hf \exp\left[\beta hf\right]}{\left(\exp\left[\beta hf\right] - 1\right)^2}\right\}\\
+   &= \frac{1}{2} + \frac{hf}{2}\coth\left(\frac{\beta hf}{2}\right)
+\end{align*}In the limit when $T\to\infty$ one has that $\beta\to0$ which gives:
+\begin{align*}
+    Z_\infty &= \lim_{\beta\to0} = \left\{\frac{1}{2} + \frac{\left(1-\exp\left[-\beta hf\right]\right)\cdot hf \exp\left[\beta hf\right]}{\left(\exp\left[\beta hf\right] - 1\right)^2}\right\}\\
+    &=\frac{1}{2} + 
+\end{align*}
+
+
+\subsection*{c)}
+Compute the specific heat capacity $C_V$ for this system.
+
+\subsection*{d)}
+Find an expression for the Helmholtz free energy for this system.
+
+\subsection*{e)}
+Find an expression for the entropy of this system as a function of temperature.
+
+\section*{Task 3}
+A specific system of $N$ distinguishable particles has the Hamiltonian on the form:
+\begin{align*}
+    H = -\mu B\sum_{i=1}^NS_i; \quad S_i\in\{-1, 0, 1\}. 
+\end{align*}
+
+\subsection*{a)}
+Write the canonical partition function for this system and hence find the free energy.  (hint:  First find the partition function for one particle!)
+
+\newparagraph
+We consider that a single particle can have three different state $S_i\in\{-1, 0, 1\}$, and thus the partition function for a single particle is given by:
+\begin{align*}
+    Z_1 &= \sum_{S_i\in\{-1, 0, 1\}}e^{-\beta H} = e^{\beta\mu B} + 1 + e^{-\beta\mu B}\\
+    &= 2\cosh(\beta\mu B) + 1.
+\end{align*}The partition function for $N$ particles is then given by:
+\begin{align*}
+    Z &= \prod_{i = 1}^N Z_1\\
+    &= \prod_{i = 1}^N \left(2\cosh(\beta\mu B) + 1\right)\\
+    &= \left(2\cosh(\beta\mu B) + 1\right)^N.
+\end{align*}The free energy $\f$ is given:
+\begin{align*}
+    \f &= -k_bT\ln(Z)\\
+    &= -Nk_bT\ln\left(2\cosh(\beta\mu B) + 1\right).
+\end{align*}
+
+\subsection*{b)}
+Find the average energy $U$ and entropy $S$ and simplify these expressions in the limits $T\to0$ and $T\to\infty$.
+
+\newparagraph
+\begin{comment}
+\begin{align*}
+    \average{E} &= -\frac{N(2\sinh(\mu\beta B)\mu B)}{(1+\cosh(\mu\beta B))^N}\cdot (1+\cosh(\mu\beta B))^{N-1}\\
+    &= -\frac{N2\sinh(\mu\beta B)\mu B}{1+\cosh(\mu\beta B)}\\
+    &= -N\mu B \tanh\left(\frac{\mu\beta B}{2}\right)
+\end{align*}
+\end{comment}
+We compute the average energy $U = \average{E}$ by the following:
+\begin{align*}
+    \average{E} &= -\frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
+    &= -\frac{N(2\sinh(\mu\beta B)\mu B)}{(1+\cosh(\mu\beta B))^N}\cdot (1+\cosh(\mu\beta B))^{N-1}\\
+    &= -B\mu\frac{\sinh\left(\beta\mu B\right)}{\cosh(\beta\mu B) + 1}\\
+    &= -N\mu B \tanh\left(\frac{\mu\beta B}{2}\right)
+\end{align*}
+The entropy $S$ is computed accordingly:
+\begin{align*}
+    S &= \frac{\average{E}}{T} + k_b\ln\left(Z\right)\\
+    &= -BN\mu\frac{\tanh\left(\frac{\mu B}{2k_bT}\right)}{T} + k_b\ln\left(\left(2\cosh\left(\frac{\mu B}{k_bT}\right) + 1\right)^N\right)\\
+    &= -BN\mu\frac{\tanh\left(\frac{\mu B}{2k_bT}\right)}{T} + Nk_b\ln\left(\left(2\cosh\left(\frac{\mu B}{k_bT}\right) + 1\right)\right).
+\end{align*}
+In the two limits one has the following:
+\begin{align*}
+    S_\infty &= \lim_{T\to\infty}\left[ -NB\mu\frac{\tanh\left(\frac{\mu B}{2k_bT}\right)}{T} + Nk_b\ln\left(\left(2\cosh\left(\frac{\mu B}{k_bT}\right) + 1\right)\right)\right]\\
+    &=0,\\
+    \average{E}_\infty &=\lim_{T\to\infty}\left[-NB\mu\tanh\left(\frac{\mu B}{2k_bT}\right)\right] = 0,\\
+    S_0 &= \lim_{T\to0}\left[ -NB\mu\frac{\tanh\left(\frac{\mu B}{2k_bT}\right)}{T} + Nk_b\ln\left(\left(2\cosh\left(\frac{\mu B}{k_bT}\right) + 1\right)\right)\right]\\
+    &= \infty,\\
+    \average{E}_0 &= \lim_{T\to0}\left[-BN\mu\tanh\left(\frac{\mu B}{2k_bT}\right)\right] = \mp NB\mu.
+\end{align*}The average energy is discontinuous at $T=0$, and thus has a left and right limit. The entropy has a singularity at $T=0$.
+
+\section*{Task 4}
+Consider the canonical ensemble (and the canonical partition function).
+
+\subsection*{a)}
+Show that the average energy $E = -\frac{\partial}{\partial \beta}\left(\ln(Z)\right)$. What would $E = -\frac{\partial}{\partial \beta}\left(\ln(Z_g)\right)$ be if $Z_g$ is the grand Canonical partition function?
+
+\newparagraph
+The average energy is given by:
+\begin{align*}
+    \average{E} &= \sum_i E_i p_i = \frac{1}{z}\sum_i E_i e^{\beta E_i}\\
+    &= -\frac{1}{Z}\sum_i E_i \frac{\partial}{\partial \beta}\left(e^{-\beta E_i}\right)\\
+    &= -\frac{1}{Z}\frac{\partial}{\partial \beta}\left(\sum_i E_i e^{-\beta E_i}\right)\\
+    &= -\frac{\partial}{\partial \beta}\ln\left(\sum_i e^{-\beta E_i}\right)\\
+    &= -\frac{\partial}{\partial \beta}\ln(Z).
+\end{align*}If one instead considers the grand canonical partition function $Z_g$, and evaluates the above, one obtains:
+\begin{align*}
+    -\frac{\partial}{\partial \beta}\ln(Z_g) &= -\frac{\partial}{\partial \beta}\ln\left(\sum_i e^{-\beta(E_i - \mu N_i)}\right)\\
+    &= \frac{\sum_i (E_i - N_i\mu)\exp\left[-\beta(E_i-N_i\mu)\right]}{\sum_i \exp\left[\beta(E_i - \mu N_i)\right]}
+\end{align*}
+
+\subsection*{b)}
+Show that the fluctuations in the energy average energy:
+\begin{align*}
+    \Delta E^2 = \bar{E}^2 - \left(\bar{E}\right)^2
+\end{align*}is proportional to the specific heat capacity. Can specific heat capacity be negative?
+
+\newparagraph
+In order to show that the fluctuations in the $\Delta E^2$ is proportional to the specific heat capacity, we first compute the fluctuations:
+\begin{align*}
+    \Delta E^2 &= \average{E^2} - \average{E}^2\\
+    &= \frac{\partial}{\partial \beta}\left[\ln\left(Z^2\right)\right] - \left(\frac{\partial}{\partial \beta}\ln(Z)\right)^2\\
+    &= \frac{\partial^2}{\partial \beta^2}\left[\ln(Z)\right].
+\end{align*}The heat capacity is given by:
+\begin{align*}
+    C_v &= \frac{\partial \average{E}}{\partial T} \\
+    &= \frac{\partial}{\partial T}\frac{\partial}{\partial \beta}\left[\ln(Z)\right]\\
+    &=\frac{1}{k_b T^2}\frac{\partial^2}{\partial \beta^2}\left[\ln(Z)\right].
+\end{align*}By this, one has that $\Delta E^2 = k_b T^2 C_v$, i.e. $C_v \propto \Delta E^2$. Moreover, the specific heat capacity can be negative. This often occurs in stellar system with the phenomena called 'negative heat capacity', as well as in ions.
+In terms of the expression for the specific heat, the following can be debated:
+\begin{align*}
+    C_v &= \underbrace{\frac{1}{k_bT^2}}_{>= 0}\underbrace{\Delta E^2}_{?}.
+\end{align*}The first term is always zero or positive, however zero temperature have never been observed, however the second term could potentially be negative. This would then in turn lead to a negative heat capacity.
+
+
+\section*{Task 5}
+Consider the following definition of entropy,
+\begin{align*}
+    S = -k_b\sum_s P(s)\ln(P(s)),
+\end{align*}where $s$ is a microstate of the system and $P(s)$ is the probability of the system being in the microstate $s$.
+
+\subsection*{a)}
+Show that this definition of entropy is equivalent to our usual definitions, for a system in thermal equilibrium with a reservoir at temperature $T$.
+
+\newparagraph
+One can rewrite the following expression as:
+\begin{align*}
+    S &= -k_b\sum_s \ln\left[P(s)^{P(s)}\right]
+\end{align*}
+
+\subsection*{b)}
+Show that this definition is consistent even for a system in contact with a reservoir at fixed temperature $T$ and fixed chemical potential $\mu$. (Hint: remember $kT\ln(Z_g)=PV$ where $Z_g$ is the grand partition function!).
+
+
+\end{document}
+ 
