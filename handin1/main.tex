@@ -146,29 +146,53 @@ From the partition function, find the average energy $\langle E \rangle$ at a te
 \vspace*{0.5cm}\noindent
 Using eq. \eqref{eq: Parition function} we can compute the average energy:
 \begin{align*}
-   \average{E} &= -\frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
-   &= -\left[\exp\left[-\frac{\beta hf}{2}\right]\frac{1}{1-\exp\left[-\beta hf\right]}\right]^{-1}\frac{\partial}{\partial \beta}\left(\exp\left[-\frac{\beta hf}{2}\right]\frac{1}{1-\exp\left[-\beta hf\right]}\right)\\
-   &= \left\{\frac{\partial}{\partial \beta}\left(\exp\left[-\frac{\beta hf}{2}\right]\right)\cdot \frac{1}{1-\exp\left[-\beta hf\right]}+\frac{\partial}{\partial \beta}\left(\frac{1}{1-\exp\left[-\beta hf\right]}\right)\cdot \exp\left[-\frac{\beta hf}{2}\right]\right\}\\
-   &\cdot(-1)\left[\frac{1-\exp\left[-\beta hf\right]}{\exp\left[-\frac{\beta hf}{2}\right]}\right]\\
-   &= \left\{-\frac{hf}{2\left(1-\exp\left[-\beta hf\right]\right)}\exp\left[-\frac{\beta hf}{2}\right] - \frac{hf\exp\left[\beta hf\right]}{\left(\exp\left[\beta hf\right] - 1\right)^2}\cdot\exp\left[-\frac{\beta hf}{2}\right]\right\}\\
-   &\cdot(-1)\left[\frac{1-\exp\left[-\beta hf\right]}{\exp\left[-\frac{\beta hf}{2}\right]}\right]\\
-   &= \left\{\frac{1}{2} + \frac{\left(1-\exp\left[-\beta hf\right]\right)\cdot hf \exp\left[\beta hf\right]}{\left(\exp\left[\beta hf\right] - 1\right)^2}\right\}\\
-   &= \frac{1}{2} + \frac{hf}{2}\coth\left(\frac{\beta hf}{2}\right)
+    \average{E} &= -\frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
+    &= -\left[\exp\left[-\frac{\beta hf}{2}\right]\frac{1}{1-\exp\left[-\beta hf\right]}\right]^{-1}\frac{\partial}{\partial \beta}\left(\exp\left[-\frac{\beta hf}{2}\right]\frac{1}{1-\exp\left[-\beta hf\right]}\right)\\
+    &= \left\{\frac{\partial}{\partial \beta}\left(\exp\left[-\frac{\beta hf}{2}\right]\right)\cdot \frac{1}{1-\exp\left[-\beta hf\right]}+\frac{\partial}{\partial \beta}\left(\frac{1}{1-\exp\left[-\beta hf\right]}\right)\cdot \exp\left[-\frac{\beta hf}{2}\right]\right\}\\
+    &\cdot(-1)\left[\frac{1-\exp\left[-\beta hf\right]}{\exp\left[-\frac{\beta hf}{2}\right]}\right]\\
+    &= \left\{-\frac{hf}{2\left(1-\exp\left[-\beta hf\right]\right)}\exp\left[-\frac{\beta hf}{2}\right] - \frac{hf\exp\left[\beta hf\right]}{\left(\exp\left[\beta hf\right] - 1\right)^2}\cdot\exp\left[-\frac{\beta hf}{2}\right]\right\}\\
+    &\cdot(-1)\left[\frac{1-\exp\left[-\beta hf\right]}{\exp\left[-\frac{\beta hf}{2}\right]}\right]\\
+    &= \left\{\frac{hf}{2} + \frac{\left(1-\exp\left[-\beta hf\right]\right)\cdot hf \exp\left[\beta hf\right]}{\left(\exp\left[\beta hf\right] - 1\right)^2}\right\}\\
+    &= \frac{hf}{2} + \frac{hf}{e^{\beta hf} - 1}= \frac{hf}{2}\coth\left(\frac{\beta hf}{2}\right).
 \end{align*}In the limit when $T\to\infty$ one has that $\beta\to0$ which gives:
 \begin{align*}
-    Z_\infty &= \lim_{\beta\to0} = \left\{\frac{1}{2} + \frac{\left(1-\exp\left[-\beta hf\right]\right)\cdot hf \exp\left[\beta hf\right]}{\left(\exp\left[\beta hf\right] - 1\right)^2}\right\}\\
-    &=\frac{1}{2} + 
+    \average{E}_\infty &= \lim_{\beta\to0} = \left\{\frac{hf}{2}\coth\left(\frac{\beta hf}{2}\right)\right\} = \infty
 \end{align*}
 
 
 \subsection*{c)}
 Compute the specific heat capacity $C_V$ for this system.
 
+\newparagraph
+The specific heat capacity is given by:
+\begin{align*}
+    C_v &= \frac{\partial \average{E}}{\partial T}\\
+    &= \frac{\partial}{\partial T}\left(\frac{h f}{2}\coth\left(\frac{hf}{2k_bT}\right)\right)\\
+    &= \frac{h^2f^2}{4k_bT^2}\frac{1}{\sinh^2\left(\frac{hf}{2k_bT}\right)}.
+\end{align*}
+
 \subsection*{d)}
 Find an expression for the Helmholtz free energy for this system.
 
+\newparagraph
+Helmholtz free energy is given by:
+\begin{align*}
+    \f &= -Tk_b\ln(Z)\\
+    &= -Tk_b\ln\left(\exp\left[-\frac{\beta hf}{2}\right]\frac{1}{1-\exp\left[-\beta hf\right]}\right)\\
+    &= -Tk_b\left[-\frac{\beta hf}{2}+ \ln\left(\frac{1}{1-\exp\left[-\beta hf\right]}\right)\right]\\
+    &= \frac{hf}{2} + Tk_b\ln\left(1-\exp\left[-\beta hf\right]\right).
+\end{align*}
+
 \subsection*{e)}
 Find an expression for the entropy of this system as a function of temperature.
+
+\newparagraph
+The entropy of the system is given by:
+\begin{align*}
+    S &= -\left(\frac{\partial \f}{\partial T}\right)_{V, N}\\
+    &= \frac{\partial}{\partial T}\left[\frac{hf}{2}+Tk_b\ln\left(1-e^{-\frac{hf}{k_bT}}\right)\right]\\
+    &= k_b\ln\left(1-e^{-\frac{hf}{k_bT}}\right) + \frac{hf}{k_bT}\frac{e^{-\frac{hf}{k_bT}}}{1-e^{-\frac{hf}{k_bT}}}.
+\end{align*}
 
 \section*{Task 3}
 A specific system of $N$ distinguishable particles has the Hamiltonian on the form:
