@@ -140,8 +140,6 @@ The partition function is now discrete and thus is given by:
     &=\exp\left[-\frac{\beta hf}{2}\right]\sum_{n=0}^\infty \exp\left[-\beta nhf\right]\nonumber\\
     &= \exp\left[-\frac{\beta hf}{2}\right]\frac{1}{1-\exp\left[-\beta hf\right]}.\label{eq: Parition function}
 \end{align}
-
-
 \subsection*{b)}
 From the partition function, find the average energy $\langle E \rangle$ at a temperature $T$. Also take the limit $T\to\infty$.
 
@@ -212,7 +210,7 @@ We compute the average energy $U = \average{E}$ by the following:
 \begin{align*}
     \average{E} &= -\frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
     &= -\frac{N(2\sinh(\mu\beta B)\mu B)}{(1+\cosh(\mu\beta B))^N}\cdot (1+\cosh(\mu\beta B))^{N-1}\\
-    &= -B\mu\frac{\sinh\left(\beta\mu B\right)}{\cosh(\beta\mu B) + 1}\\
+    &= -N\mu B\frac{\sinh\left(\beta\mu B\right)}{\cosh(\beta\mu B) + 1}\\
     &= -N\mu B \tanh\left(\frac{\mu\beta B}{2}\right)
 \end{align*}
 The entropy $S$ is computed accordingly:
@@ -261,8 +259,9 @@ Show that the fluctuations in the energy average energy:
 In order to show that the fluctuations in the $\Delta E^2$ is proportional to the specific heat capacity, we first compute the fluctuations:
 \begin{align*}
     \Delta E^2 &= \average{E^2} - \average{E}^2\\
-    &= \frac{\partial}{\partial \beta}\left[\ln\left(Z^2\right)\right] - \left(\frac{\partial}{\partial \beta}\ln(Z)\right)^2\\
-    &= \frac{\partial^2}{\partial \beta^2}\left[\ln(Z)\right].
+    &= \frac{\sum_i E_i^2\exp\left(E_i\beta\right)}{\sum_i\exp\left(E_i\beta\right)} - \left(\frac{\sum_i E_i\exp\left[E_i\beta\right]}{\sum_i \exp\left[E_i\beta\right]}\right)^2\\
+    &= \frac{1}{Z}\frac{\partial^2Z}{\partial\beta^2}-\frac{1}{Z^2}\left(\frac{\partial Z}{\partial \beta}\right)^2\\
+    &= \frac{\partial^2}{\partial\beta^2}\left[\ln(Z)\right]
 \end{align*}The heat capacity is given by:
 \begin{align*}
     C_v &= \frac{\partial \average{E}}{\partial T} \\
@@ -277,21 +276,41 @@ In terms of the expression for the specific heat, the following can be debated:
 
 \section*{Task 5}
 Consider the following definition of entropy,
-\begin{align*}
-    S = -k_b\sum_s P(s)\ln(P(s)),
-\end{align*}where $s$ is a microstate of the system and $P(s)$ is the probability of the system being in the microstate $s$.
+\begin{align}
+    S = -k_b\sum_s P(s)\ln(P(s)),\label{eq: Entropy def}
+\end{align}where $s$ is a microstate of the system and $P(s)$ is the probability of the system being in the microstate $s$.
 
 \subsection*{a)}
 Show that this definition of entropy is equivalent to our usual definitions, for a system in thermal equilibrium with a reservoir at temperature $T$.
 
 \newparagraph
-One can rewrite the following expression as:
+Let $P(s)$ be the probability of the system being in a microstate $s$, then:
 \begin{align*}
-    S &= -k_b\sum_s \ln\left[P(s)^{P(s)}\right]
-\end{align*}
+    P(s) &= \frac{e^{-\beta E_s}}{Z}; \quad Z = \sum_s e^{-\beta E_s}.\\
+\end{align*}Substituting the expression for $P(s)$ into eq \eqref{eq: Entropy def} yields:
+\begin{align*}
+    S&= -k_b\sum_s \left[\frac{e^{-\beta E_s}}{Z}\cdot \ln\left(\frac{e^{-\beta E_s}}{Z}\right)\right]\\
+    &= -k_b\sum_s \left[\frac{e^{-\beta E_s}}{Z}\cdot\left(\ln\left(e^{-\beta E_s}\right) - \ln\left(Z\right)\right)\right]\\
+    &= -k_b\sum_s\left[\frac{e^{-\beta E_s}}{Z}\cdot\left(-\beta E_s - \ln\left(Z\right)\right)\right]\\
+    &= k_b\sum_s\left[\frac{e^{-\beta E_s}}{Z}\cdot\left(\beta E_s\right)\right] + k_b\ln(Z)\underbrace{\sum_s\left[\frac{e^{-\beta E_s}}{Z}\right]}_{=1}\\
+    &= \frac{\average{E}}{T} + k_b\ln\left(Z\right).
+\end{align*}Thus, as shown above, the definition of entropy in eq. \eqref{eq: Entropy def} is equivalent to the usual definition of entropy which is used in previous tasks.
 
 \subsection*{b)}
 Show that this definition is consistent even for a system in contact with a reservoir at fixed temperature $T$ and fixed chemical potential $\mu$. (Hint: remember $kT\ln(Z_g)=PV$ where $Z_g$ is the grand partition function!).
+
+\newparagraph
+In order to show that the solution is consistent, we first say that the probability of a microstate $s$ is given by:
+\begin{align*}
+    P(s) &= \frac{e^{-\beta(E_s - \mu N_s)}}{Z_g}; \quad Z_g = \sum_s e^{-\beta(E_s - \mu N_s)}.
+\end{align*}We use this result in the definition of entropy in eq. \eqref{eq: Entropy def}:
+\begin{align*}
+    S&=-k_b\sum_s\left[\frac{e^{-\beta(E_s - \mu N_s)}}{Z_g}\ln\left(\frac{e^{-\beta(E_s - \mu N_s)}}{Z_g}\right)\right]\\
+    &=-k_b\sum_s\left[\frac{e^{-\beta(E_s - \mu N_s)}}{Z_g}\left(-\beta(E_s - \mu N_s)-\ln\left(Z_g\right)\right)\right]\\
+    &= k_b\sum_s\frac{e^{-\beta(E_s-\mu N_s)}\beta(E_s -\mu N_s)}{Z_g} + k_b\ln(Z_g)\underbrace{\sum_s \frac{e^{-\beta(E_s - \mu N_s)}}{Z_g}}_{=1}\\
+    &= \frac{\average{E}}{T} + k_b\ln(Z_g)\frac{T}{T}\\
+    &= \frac{\average{E}}{T} + \frac{PV}{T}.
+\end{align*}
 
 
 \end{document}
