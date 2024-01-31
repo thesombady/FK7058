@@ -1,0 +1,191 @@
+\documentclass[a4paper]{article}
+
+% --- Packages ---
+
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage{mdframed}
+\usepackage{systeme,}
+\usepackage{lipsum}
+\usepackage{relsize}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{shapes.geometric}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=newest}%1.7}
+\usepackage{harpoon}%
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{authblk}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{chngcntr}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{commath}
+\usepackage{hyperref}%Might remove, adds link to each reference
+\usepackage{url}
+\usepackage{calligra}
+
+% --- Commands --- 
+
+\newcommand{\w}{\omega}
+\newcommand{\trace}{\text{Tr}}
+\newcommand{\grad}{\mathbf{\nabla}}
+%\newcommand{\crr}{\mathfrak{r}}
+\newcommand{\laplace}{\nabla^2}
+\newcommand{\newparagraph}{\vspace{.5cm}\noindent}
+
+% --- Math character commands ---
+
+\newcommand{\curl}[1]{\mathbf{\nabla}\times \mathbf{#1}}
+\newcommand{\dive}[1]{\mathbf{\nabla}\cdot \mathbf{#1}}
+\newcommand{\res}[2]{\text{Res}(#1,#2)}
+\newcommand{\fpartial}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\rot}[3]{\begin{vmatrix}\hat{x}&\hat{y}&\hat{z}\\\partial_x&\partial_y&\partial_z\\#1&#2&#3 \end{vmatrix}}
+\newcommand{\average}[1]{\langle #1 \rangle}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+
+
+%  --- Special character commands ---
+
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+\newcommand{\crr}{\mathcalligra{r}\,}
+\newcommand{\boldscriptr}{\pmb{\mathcalligra{r}}\,}
+
+
+\title{FK7058: Handin2}
+\author{Author : Andreas Evensen}
+\date{Date: \today}
+
+% --- Code ---
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\maketitle
+\noindent
+Consider Ising model, with the following Hamiltonian:
+\begin{align*}
+    -\mathcal{H} &= H(S_1 + S_2) + JS_1S_2,
+\end{align*}where $J >0$ and $S_i = \pm 1 \forall i$.
+
+\subsection*{1)}
+Enumerate all the microstates of the system as well as the probabilities of these microstates.
+
+\newparagraph
+\textbf{Answer:} All the possible states are the combination of the two spins $S_1$ and $S_2$.
+\begin{enumerate}
+    \item $S_1 = 1$ and $S_2 = 1$. 
+    \item $S_1 = 1$ and $S_2 = -1$. 
+    \item $S_1 = -1$ and $S_2 = 1$. 
+    \item $S_1 = -1$ and $S_2 = -1$. 
+\end{enumerate}There is an equal probability for each state and since there are four microstates, the probability of each state is $1/4$.
+
+\subsection*{2)}
+Calculate the partition function.
+
+\newparagraph
+\textbf{Answer:} The partition function is given as:
+\begin{align*}
+    \sum_i e^{-\beta E_i} &= e^{\beta(2H + J)} + 2e^{\beta J} + e^{\beta(-2H + J)}\\
+    &= e^{\beta J}\left[2 + e^{2\beta H} + e^{-2\beta H}\right]\\
+    &= e^{\beta J}\left[2 + 2\cosh(2\beta H)\right]
+\end{align*}
+
+\subsection*{3)}
+How does the partition function (and hence the free energy) change if we replace $H$ by $-H$?
+
+\newparagraph
+\textbf{Answer:}If instead $H$ is replaced by $-H$ the partition function becomes:
+\begin{align*}
+    Z &= \sum_i e^{-\beta E_i}\\
+    &=e^{-\beta E_1} + e^{-\beta E_2} + e^{-\beta E_3} + e^{-\beta E_4}\\
+    &= e^{-\beta (-2H + J)} + 2e^{\beta (J)} + e^{-\beta (2H + J)}\\
+    &= e^{\beta J}\left[2 + 2\cosh(2\beta H)\right].
+\end{align*}The partition function does not change, and thus, neither does the free energy.
+
+\subsection*{4)}
+Calculate the average energy of this system.
+
+\newparagraph
+\textbf{Answer:} The average energy of the system is given by:
+\begin{align*}
+    \average{E} &= \frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
+    &= -\frac{1}{Z}\frac{\partial}{\partial \beta}\left[e^{\beta J}\left[2 + 2\cosh(2\beta H)\right]\right]\\
+    &= -\frac{1}{Z}\left[e^{\beta J}J\left[2 + 2\cosh(2\beta H)\right] + e^{\beta J}\left[4H\sinh(2\beta H)\right]\right]\\
+    &= -\frac{1}{Z}e^{\beta J}\left[J\left[2 + 2\cosh(2\beta H)\right] + \left[4H\sinh(2\beta H)\right]\right]\\
+    &= -\frac{J\left(2 + 2\cosh(2\beta H)\right) + 4H\sinh(2\beta H)}{2 + 2\cosh(2\beta H)}\\
+    &=  -\left[J+ 2H\tanh(\beta H)\right]
+\end{align*}
+
+\subsection*{5)}
+Calculate the magnetization per unit spin $M =\langle\frac{M_1 + M_2}{2}\rangle$. How is $M$ related to the free energy of the system?
+What is $M$ at $H = 0$?
+
+\newparagraph
+\textbf{Answer:}
+
+\subsection*{6)}
+What is $M$ in the limit $T\to 0$?
+
+\newparagraph
+\textbf{Answer:}
+
+\subsection*{7)}
+Calculate $\average{S_1 \cdot S_2} - \average{S_1}\average{S_2}$ the connected correlation function.
+
+\newparagraph
+\textbf{Answer:} We begin by computing the average of $S_1$ and $S_2$:
+\begin{align*}
+    \average{S_1} &= \sum_i S_1^{(i)} \cdot p_i = \frac{1}{4} - \frac{1}{4} = 0,\\
+    \average{S_2} &= \sum_i S_2^{(i)}\cdot p_i = \frac{1}{4} - \frac{1}{4} = 0.
+\end{align*}
+
+\subsection*{8)}
+Show that, if we change the Hamiltonian of the system so that:
+\begin{align*}
+    -\mathcal{H} = H_1S_1 + H_2S_2 + JS_1S_2,
+\end{align*}the connected correlation function can be written as the second derivative of the free energy.
+
+\newparagraph
+\textbf{Answer:}
+
+
+\end{document}
+ 
