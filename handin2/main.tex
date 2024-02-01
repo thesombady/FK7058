@@ -123,7 +123,7 @@ Calculate the partition function.
 \newparagraph
 \textbf{Answer:} The partition function is given as:
 \begin{align*}
-    \sum_i e^{-\beta E_i} &= e^{\beta(2H + J)} + 2e^{\beta J} + e^{\beta(-2H + J)}\\
+    Z &= \sum_i e^{-\beta E_i} = e^{\beta(2H + J)} + 2e^{\beta J} + e^{\beta(-2H + J)}\\
     &= e^{\beta J}\left[2 + e^{2\beta H} + e^{-2\beta H}\right]\\
     &= e^{\beta J}\left[2 + 2\cosh(2\beta H)\right]
 \end{align*}
@@ -175,6 +175,13 @@ Calculate $\average{S_1 \cdot S_2} - \average{S_1}\average{S_2}$ the connected c
 \begin{align*}
     \average{S_1} &= \sum_i S_1^{(i)} \cdot p_i = \frac{1}{4} - \frac{1}{4} = 0,\\
     \average{S_2} &= \sum_i S_2^{(i)}\cdot p_i = \frac{1}{4} - \frac{1}{4} = 0.
+\end{align*}Hence, we can write the connected correlation function as:
+\begin{align*}
+    \average{S_1\cdot S_2} &=\frac{1}{Z}\sum_{S_1}\sum_{S_2}\exp\left[\beta\left(H(S_1 + S_2) + K(S_1\cdot S_2)\right)\right]\\
+    &= \frac{1}{Z}\left[\sum_{S_1}\exp\left(H(S_1 + 1) + J(S_1\cdot 1)\right) + \exp\left(H(S_1 - 1) + J(S_1 \cdot1)\right)\right]\\
+    &= \frac{1}{Z}\left[\sum_{S_1}\exp\left(\beta(H(2) + J(1))\right) + \exp\left(\beta(H(-2) + J(1))\right) + 2e^{\beta J}\right]\\
+    &=\frac{e^{\beta J}}{Z}\left[e^{2\beta H} + 2 + e^{-2\beta H}\right]\\
+    &= \frac{e^{\beta J}(2 + 2\cosh(2\beta H)))}{e^{\beta J}\left[2 + 2\cosh(2\beta H)\right]} = 1.
 \end{align*}
 
 \subsection*{8)}
@@ -184,8 +191,41 @@ Show that, if we change the Hamiltonian of the system so that:
 \end{align*}the connected correlation function can be written as the second derivative of the free energy.
 
 \newparagraph
-\textbf{Answer:}
+\textbf{Answer:} We first define the partition function:
+\begin{align*}
+    Z &= \sum_i e^{-\beta \mathcal{H}_i}.
+\end{align*}The free energy is then given by:
+\begin{align*}
+    \mathcal{F} = -k_b T\ln(Z).
+\end{align*}The correlation function, $G(S_1, S_2)$ can be written in the following manner:
+\begin{align}
+    G(S_1, S_2) &= \frac{1}{Z}\sum_{S_1}\sum_{S_2}S_1S_2e^{-\beta \mathcal{H}} - \average{S_1}\average{S_2}.\label{eq: corr}
+\end{align}We compute the two partial derivatives of $\mathcal{F}$ with respect to $H_1$ and $H_2$:
+\begin{align}
+    \frac{\partial^2\mathcal{F}}{\partial H_1\partial H_2} &= \frac{k_bT}{Z}\frac{\partial^2 Z}{\partial H_1\partial H_2}\nonumber\\
+    &= \frac{k_bT}{Z}\left(\beta^2\sum_{S_1}\sum_{S_2}S_1S_2e^{\beta(H_1S_1 + H_2S_2 + JS_1S_2)}\right)\nonumber\\
+    &= \frac{\beta}{Z} \left(\sum_{S_1}\sum{S_2}e^{\beta\mathcal{H}_i}\right)\label{eq: part1}
+\end{align}Comparing \eqref{eq: corr} and \eqref{eq: part1} we see that:
+\begin{align*}
+    G(S_1, S_2) &= \frac{1}{\beta}\frac{\partial^2\mathcal{F}}{\partial H_1\partial H_2} - \average{S_1}\average{S_2}.
+\end{align*}And thus one has proved that the connected correlation function can be written as the second derivative of the free energy.
 
+\begin{comment}
+If we instead have the above Hamiltonian, we compute the partition function:
+\begin{align*}
+    Z &= \sum_i e^{-\beta E_i} = e^{\beta(H_1 + H_2 + J)} + e^{\beta(-H_1 + H_2 -J)} + e^{\beta(H_1 - H_2 - J)} + e^{\beta(-H_1 - H_2 + J)}\\
+    &= e^{\beta J}\left[e^{\beta(H_1 + H_2)} + e^{-\beta(H_1 + H_2)}\right] + e^{-\beta J}\left[e^{\beta(-H_1 + H_2)} + e^{-\beta(-H_1 + H_2)}\right]\\
+    &= e^{\beta J}2\cosh\left(\beta(H_1 + H_2)\right) + e^{-\beta J}2\cosh\left(\beta(-H_1 + H_2)\right).
+\end{align*}The connected correlation function can still be written as:
+\begin{align*}
+    \average{S_1\cdot S_2} &= \frac{1}{Z}\sum_{S_1}\sum_{S_2}\exp\left[\beta\left(H_1S_1 + H_2S_2 + K(S_1\cdot S_2)\right)\right]\\
+    &= \frac{1}{Z}\left[\sum_{S_1}\exp\left(\beta(H_1S_1 + H_2 + JS_1)\right) + \exp\left(\beta(H_1S_1 - H_2 + JS_1)\right)\right]\\
+    &= \frac{1}{Z}\Bigg[\exp\left(\beta(H_1 + H_2 + J)\right) + \exp\left(\beta(-H_1 + H_2 - J)\right)\\
+    & + \exp\left(\beta(H_1 - H_2 - J)\right) + \exp\left(\beta(-H_1 - H_2 + J)\right)\Bigg]\\
+    &= \frac{1}{Z}\left[e^{\beta J}\left(e^{\beta(H_1 + H_2)} + e^{-\beta(H_1+H_2)}\right) + e^{-\beta J}\left(e^{\beta(-H_1 + H_2)}+e^{-\beta(-H_1 + H_2)}\right)\right]\\
+    &=\frac{e^{\beta J}2\cosh\left(\beta(H_1 + H_2)\right) + e^{-\beta J}2\cosh\left(\beta(-H_1 + H_2)\right)}{e^{\beta J}2\cosh\left(\beta(H_1 + H_2)\right) + e^{-\beta J}2\cosh\left(\beta(-H_1 + H_2)\right)} = 1.
+\end{align*}
+\end{comment}
 
 \end{document}
  
