@@ -111,11 +111,18 @@ Enumerate all the microstates of the system as well as the probabilities of thes
 \newparagraph
 \textbf{Answer:} All the possible states are the combination of the two spins $S_1$ and $S_2$.
 \begin{enumerate}
-    \item $S_1 = 1$ and $S_2 = 1$. 
-    \item $S_1 = 1$ and $S_2 = -1$. 
-    \item $S_1 = -1$ and $S_2 = 1$. 
-    \item $S_1 = -1$ and $S_2 = -1$. 
-\end{enumerate}There is an equal probability for each state and since there are four microstates, the probability of each state is $1/4$.
+    \item $S_1 = 1$ and $S_2 = 1$, $-\mathcal{H} = 2H + J$. 
+    \item $S_1 = 1$ and $S_2 = -1$, $-\mathcal{H} = -J$. 
+    \item $S_1 = -1$ and $S_2 = 1$, $-\mathcal{H} = -J$. 
+    \item $S_1 = -1$ and $S_2 = -1$, $-\mathcal{H} = -2H + J$. 
+\end{enumerate}The probability of the states is given by the following:
+\begin{align*}
+    P(S_1, S_2) &= \frac{e^{-\beta E_i}}{Z},\\
+    P(1, 1) &= \frac{e^{\beta(2H + J)}}{Z},\\
+    P(1, -1) &= \frac{e^{\beta(-J)}}{Z},\\
+    P(-1, 1) &= \frac{e^{\beta(-J)}}{Z},\\
+    P(-1, -1) &= \frac{e^{\beta(-2H + J)}}{Z}.
+\end{align*}
 
 \subsection*{2)}
 Calculate the partition function.
@@ -123,9 +130,9 @@ Calculate the partition function.
 \newparagraph
 \textbf{Answer:} The partition function is given as:
 \begin{align*}
-    Z &= \sum_i e^{-\beta E_i} = e^{\beta(2H + J)} + 2e^{\beta J} + e^{\beta(-2H + J)}\\
-    &= e^{\beta J}\left[2 + e^{2\beta H} + e^{-2\beta H}\right]\\
-    &= e^{\beta J}\left[2 + 2\cosh(2\beta H)\right]
+    Z &= \sum_i e^{-\beta E_i} = e^{\beta(2H + J)} + 2e^{-\beta J} + e^{\beta(-2H + J)}\\
+    &= e^{\beta J}\left[2e^{-2\beta J} + e^{2\beta H} + e^{-2\beta H}\right]\\
+    &= e^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]
 \end{align*}
 
 \subsection*{3)}
@@ -136,8 +143,8 @@ How does the partition function (and hence the free energy) change if we replace
 \begin{align*}
     Z &= \sum_i e^{-\beta E_i}\\
     &=e^{-\beta E_1} + e^{-\beta E_2} + e^{-\beta E_3} + e^{-\beta E_4}\\
-    &= e^{-\beta (-2H + J)} + 2e^{\beta (J)} + e^{-\beta (2H + J)}\\
-    &= e^{\beta J}\left[2 + 2\cosh(2\beta H)\right].
+    &= e^{-\beta (-2H + J)} + 2e^{-\beta (J)} + e^{-\beta (2H + J)}\\
+    &= e^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right].
 \end{align*}The partition function does not change, and thus, neither does the free energy.
 
 \subsection*{4)}
@@ -147,25 +154,88 @@ Calculate the average energy of this system.
 \textbf{Answer:} The average energy of the system is given by:
 \begin{align*}
     \average{E} &= \frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
+    &= -\frac{1}{Z}\frac{\partial}{\partial \beta}\left[e^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]\right]\\
+    &= -\frac{1}{Z}\left[Je^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right] + e^{\beta J}\left(-4Je^{-2\beta J} +4H\sinh(2\beta H)\right)\right]\\
+    &= -\frac{Je^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right] + e^{\beta J}\left(-4Je^{-2\beta J} +4H\sinh(2\beta H)\right)}{e^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]}\\
+    &= -J + \frac{4Je^{-2\beta J} - 4H\sinh(2\beta H)}{2\cosh(2\beta H) + 2e^{-2\beta J}}
+\end{align*}
+\begin{comment}
+\begin{align*}
+    \average{E} &= \frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
     &= -\frac{1}{Z}\frac{\partial}{\partial \beta}\left[e^{\beta J}\left[2 + 2\cosh(2\beta H)\right]\right]\\
     &= -\frac{1}{Z}\left[e^{\beta J}J\left[2 + 2\cosh(2\beta H)\right] + e^{\beta J}\left[4H\sinh(2\beta H)\right]\right]\\
     &= -\frac{1}{Z}e^{\beta J}\left[J\left[2 + 2\cosh(2\beta H)\right] + \left[4H\sinh(2\beta H)\right]\right]\\
     &= -\frac{J\left(2 + 2\cosh(2\beta H)\right) + 4H\sinh(2\beta H)}{2 + 2\cosh(2\beta H)}\\
     &=  -\left[J+ 2H\tanh(\beta H)\right]
 \end{align*}
+\end{comment}
 
 \subsection*{5)}
 Calculate the magnetization per unit spin $M =\langle\frac{M_1 + M_2}{2}\rangle$. How is $M$ related to the free energy of the system?
 What is $M$ at $H = 0$?
 
 \newparagraph
-\textbf{Answer:}
+\textbf{Answer:} The magnetization per unit spin $M$ is defined as:
+\begin{align*}
+    M &= \frac{1}{N}\sum_{i = 1}^N \average{S_i} = \frac{\average{S_1} + \average{S_2}}{2}
+\end{align*}
+We can now write, that in general, the magnetization per unit spin is given by:
+\begin{align*}
+    M &= -\frac{1}{N}\frac{\partial\mathcal{F}}{\partial H}\\
+    &= -\frac{1}{2}\frac{\partial \mathcal{F}}{\partial H}.
+\end{align*}Thus, one has that the magnetization per unit spin is related to the free energy of the system, and to the average sin of the system.
+One computes the derivative of the free energy with respect to $H$:
+\begin{align*}
+    M &=-\frac{1}{2}\frac{\partial F}{\partial H} = -\frac{1}{2}\frac{\partial}{\partial H}\left(-k_bT\ln(Z)\right)\\
+    &=\frac{k_bT}{2}\frac{\partial}{\partial H}\left[\ln\left(e^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]\right)\right]\\
+    &=\frac{k_bT}{2}\frac{\partial}{\partial H}\left(\ln\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]\right)\\
+    &=\frac{1}{2}\frac{2 \sinh(2\beta H)}{e^{-J\beta} + 2\cosh(2\beta H)}.
+\end{align*}When $H = 0$ one has that the magnetization per unit spin is given by:
+\begin{align*}
+    M(H = 0) &= \frac{1}{2}\frac{2 \cdot 0}{e^{-J\beta} + 2} = 0.
+\end{align*}
+\begin{comment}
+One can write the $\average{S_1}$ and $\average{S_2}$ as:
+\begin{align*}
+    \average{S_1} &= -\frac{\partial\mathcal{F}}{\partial H_1},\\
+    \average{S_2} &= -\frac{\partial\mathcal{F}}{\partial H_2},
+\end{align*}if one assumes that the Hamiltonian is on the form $-\mathcal{H} = H_1S_1 + H_2S_2 + JS_1S_2$. The free energy is then given by:
+\begin{align*}
+    \mathcal{F} &= -k_bT\ln(Z),
+\end{align*}where the partition function is given by;
+\begin{align*}
+    Z &= \sum_{S_1}\sum_{S_2}\exp\left[\beta\left(H_1S_1 + H_2S_2 + JS_1S_2\right)\right]\\
+    &= \exp\left[\beta H_1 + \beta H_2 + J\right] + \exp\left[\beta H_1 - \beta H_2 - J\right] + \exp\left[-\beta H_1 + \beta H_2 - J\right] + \exp\left[-\beta H_1 - \beta H_2 + J\right]\\
+    &= e^{\beta J}\left[e^{\beta(H_1 + H_2)} + e^{-\beta(H_1 + H_2)}\right] + e^{-\beta J}\left[e^{\beta(-H_1 + H_2)} + e^{-\beta(-H_1 + H_2)}\right]\\
+    &= e^{\beta J}2\cosh\left(\beta(H_1 + H_2)\right) + e^{-\beta J}2\cosh\left(\beta(-H_1 + H_2)\right).
+\end{align*}Thus, the free energy is given by:
+\begin{align*}
+    \mathcal{F} &= -k_bT\ln\left(e^{\beta J}2\cosh\left(\beta(H_1 + H_2)\right) + e^{-\beta J}2\cosh\left(\beta(-H_1 + H_2)\right)\right).
+\end{align*}The averages of $S_1$ and $S_2$ are then given by:
+\begin{align*}
+    \average{S_1} &= -\frac{\partial\mathcal{F}}{\partial H_1}\\
+    &= -\frac{\partial}{\partial H_1}\left[-k_bT\ln\left(e^{\beta J}2\cosh\left(\beta(H_1 + H_2)\right) + e^{-\beta J}2\cosh\left(\beta(-H_1 + H_2)\right)\right)\right]\\
+    &= - k_bT\left[2\beta e^{-\beta J }\sinh\left(\beta[H_1 - H_2]\right) + \beta\right]\cdot\tanh\left[2e^{-\beta J}\cosh\left(\beta[H_2 - H_1]\right) + \beta(H_1 + H_2)\right],\\
+    \average{S_2} &= -\frac{\partial\mathcal{F}}{\partial H_2}\\
+    &= -\frac{\partial}{\partial H_2}\left[-k_bT\ln\left(e^{\beta J}2\cosh\left(\beta(H_1 + H_2)\right) + e^{-\beta J}2\cosh\left(\beta(-H_1 + H_2)\right)\right)\right]\\
+    &= - k_bT\left[2\beta e^{-\beta J }\sinh\left(\beta[H_1 - H_2]\right) + \beta\right]\cdot\tanh\left[2e^{-\beta J}\cosh\left(\beta[H_2 - H_1]\right) + \beta(H_1 + H_2)\right].
+\end{align*}One has that $H_1 = H_2 = H$ and thus:
+\begin{align*}
+    M &= \frac{1}{2}\left(\average{S_1} + \average{S_2}\right)\\
+    &= -\frac{k_bT}{2}\left(\left[\beta\right]\tanh\left[2e^{-\beta J} + 2H\beta\right] + \left[\beta\right]\tanh\left[2e^{-\beta J} + 2H\beta\right]\right)\\
+    &= -\tanh\left[2e^{-\beta J} + 2H\beta\right]
+\end{align*}
+\end{comment}
 
 \subsection*{6)}
 What is $M$ in the limit $T\to 0$?
 
 \newparagraph
-\textbf{Answer:}
+\textbf{Answer:}We can rewrite the limit as $\beta\to\infty$, which gives the following:
+\begin{align*}
+    \lim_{\beta\to\infty}M&= \lim_{\beta\to\infty}\left(\frac{1}{2}\frac{2 \sinh(2\beta H)}{e^{-J\beta} + 2\cosh(2\beta H)}\right)\\
+    &= \lim_{\beta\to\infty}\left(\frac{\sinh(2\beta H)}{\cosh(2\beta H)}\right) = \lim_{\beta\to\infty}\left(\tanh(2\beta H)\right) = \mp 1,
+\end{align*}The magnetization per unit spin $M$ is then given by $\mp 1$ in the limit $T\to 0$, depending on the sign of $H$.
 
 \subsection*{7)}
 Calculate $\average{S_1 \cdot S_2} - \average{S_1}\average{S_2}$ the connected correlation function.
@@ -173,15 +243,25 @@ Calculate $\average{S_1 \cdot S_2} - \average{S_1}\average{S_2}$ the connected c
 \newparagraph
 \textbf{Answer:} We begin by computing the average of $S_1$ and $S_2$:
 \begin{align*}
-    \average{S_1} &= \sum_i S_1^{(i)} \cdot p_i = \frac{1}{4} - \frac{1}{4} = 0,\\
-    \average{S_2} &= \sum_i S_2^{(i)}\cdot p_i = \frac{1}{4} - \frac{1}{4} = 0.
-\end{align*}Hence, we can write the connected correlation function as:
+    \average{S_1} &= \sum_i S_1^{(i)} \cdot p_i = \frac{1}{Z}\left(e^{\beta(2H + J)} + e^{-\beta J} - e^{-\beta J} - e^{\beta(-2H + J)}\right)\\
+    &= \frac{e^{\beta(2H + J)} - e^{\beta(-2H + J)}}{e^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]} = \frac{2\sinh(2H)}{\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]}\\
+    \average{S_2} &= \sum_i S_2^{(i)} \cdot p_i = \frac{1}{Z}\left(e^{\beta(2H + J)} + e^{-\beta J} - e^{-\beta J} - e^{\beta(-2H + J)}\right)\\
+    &= \frac{e^{\beta(2H + J)} - e^{\beta(-2H + J)}}{e^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]} = \frac{2\sinh(2H)}{\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]}\\
+\end{align*}Thus $\average{S_1} = \average{S_2}$. We now compute $\average{S_1\cdot S_2}$:
 \begin{align*}
     \average{S_1\cdot S_2} &=\frac{1}{Z}\sum_{S_1}\sum_{S_2}\exp\left[\beta\left(H(S_1 + S_2) + K(S_1\cdot S_2)\right)\right]\\
-    &= \frac{1}{Z}\left[\sum_{S_1}\exp\left(H(S_1 + 1) + J(S_1\cdot 1)\right) + \exp\left(H(S_1 - 1) + J(S_1 \cdot1)\right)\right]\\
-    &= \frac{1}{Z}\left[\sum_{S_1}\exp\left(\beta(H(2) + J(1))\right) + \exp\left(\beta(H(-2) + J(1))\right) + 2e^{\beta J}\right]\\
-    &=\frac{e^{\beta J}}{Z}\left[e^{2\beta H} + 2 + e^{-2\beta H}\right]\\
-    &= \frac{e^{\beta J}(2 + 2\cosh(2\beta H)))}{e^{\beta J}\left[2 + 2\cosh(2\beta H)\right]} = 1.
+    &= \frac{1}{Z}\left[\sum_{S_1}\exp\left(H(S_1 + 1) + J(S_1\cdot 1)\right) + \exp\left(H(S_1 - 1) - J(S_1 \cdot1)\right)\right]\\
+    &= \frac{1}{Z}\left[\sum_{S_1}\exp\left(\beta(H(2) + J(1))\right) + \exp\left(\beta(H(-2) + J(1))\right) - 2e^{-\beta J}\right]\\
+    &=\frac{e^{\beta J}}{Z}\left[e^{2\beta H} - 2e^{-2\beta J} + e^{-2\beta H}\right]\\
+    &= \frac{2\cosh(2\beta H)-2e^{-2\beta J}}{2e^{-2\beta J} + 2\cosh(2\beta H)}.
+\end{align*}Thus, the connected correlation function is given by:
+\begin{align*}
+    G(S_1,S_2) &= \average{S_1\cdot S_2} - \average{S_1}\average{S_2}\\
+    &= \frac{2\cosh(2\beta H)-2e^{-2\beta J}}{2e^{-2\beta J} + 2\cosh(2\beta H)} - \left(\frac{\sinh(2H\beta)}{\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]}\right)^2\\
+    &= \frac{\left(2\cosh(2\beta H)-2e^{-2\beta J}\right)\cdot(2e^{-2\beta J} + 2\cosh(2\beta H))}{(2e^{-2\beta J} + 2\cosh(2\beta H))^2} - \left(\frac{\sinh(2H\beta)}{\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]}\right)^2\\
+    &= \frac{4\cosh^2\left(2H\beta\right) - 4 e^{-4\beta J}-\sinh^2\left(2H\beta\right)}{(2e^{-2\beta J} + 2\cosh(2\beta H))^2}\\
+    &= \frac{4 - 4 e^{-4\beta J}}{(2e^{-2\beta J} + 2\cosh(2\beta H))^2}\\
+    &= \frac{1-e^{-4\beta J}}{\left(e^{-2\beta J} + 2\cosh(2\beta H)\right)^2}.
 \end{align*}
 
 \subsection*{8)}
@@ -199,12 +279,12 @@ Show that, if we change the Hamiltonian of the system so that:
     \mathcal{F} = -k_b T\ln(Z).
 \end{align*}The correlation function, $G(S_1, S_2)$ can be written in the following manner:
 \begin{align}
-    G(S_1, S_2) &= \frac{1}{Z}\sum_{S_1}\sum_{S_2}S_1S_2e^{-\beta \mathcal{H}} - \average{S_1}\average{S_2}.\label{eq: corr}
+    G(S_1, S_2) &= \frac{1}{Z}\sum_{S_1}\sum_{S_2}S_1S_2e^{\beta \mathcal{H}} - \average{S_1}\average{S_2}.\label{eq: corr}
 \end{align}We compute the two partial derivatives of $\mathcal{F}$ with respect to $H_1$ and $H_2$:
 \begin{align}
     \frac{\partial^2\mathcal{F}}{\partial H_1\partial H_2} &= \frac{k_bT}{Z}\frac{\partial^2 Z}{\partial H_1\partial H_2}\nonumber\\
     &= \frac{k_bT}{Z}\left(\beta^2\sum_{S_1}\sum_{S_2}S_1S_2e^{\beta(H_1S_1 + H_2S_2 + JS_1S_2)}\right)\nonumber\\
-    &= \frac{\beta}{Z} \left(\sum_{S_1}\sum{S_2}e^{\beta\mathcal{H}_i}\right)\label{eq: part1}
+    &= \frac{\beta}{Z} \left(\sum_{S_1}\sum_{S_2}S_1S_2e^{\beta\mathcal{H}_i}\right)\label{eq: part1}
 \end{align}Comparing \eqref{eq: corr} and \eqref{eq: part1} we see that:
 \begin{align*}
     G(S_1, S_2) &= \frac{1}{\beta}\frac{\partial^2\mathcal{F}}{\partial H_1\partial H_2} - \average{S_1}\average{S_2}.
