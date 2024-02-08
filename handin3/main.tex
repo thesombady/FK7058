@@ -1,0 +1,456 @@
+\documentclass[a4paper]{article}
+
+% --- Packages ---
+
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage{mdframed}
+\usepackage{systeme,}
+\usepackage{lipsum}
+\usepackage{relsize}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{shapes.geometric}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=newest}%1.7}
+\usepackage{harpoon}%
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{authblk}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{chngcntr}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{commath}
+\usepackage{hyperref}%Might remove, adds link to each reference
+\usepackage{url}
+\usepackage{calligra}
+\usepackage{pgf}
+
+% --- Bibtex ---
+
+%\usepackage[backend = biblar,]{bibtex}
+
+%\addbibliografy(ref.bib)
+
+% --- Commands --- 
+
+\newcommand{\w}{\omega}
+\newcommand{\trace}{\text{Tr}}
+\newcommand{\grad}{\mathbf{\nabla}}
+%\newcommand{\crr}{\mathfrak{r}}
+\newcommand{\laplace}{\nabla^2}
+\newcommand{\newparagraph}{\vspace{.5cm}\noindent}
+
+% --- Math character commands ---
+
+\newcommand{\curl}[1]{\mathbf{\nabla}\times \mathbf{#1}}
+\newcommand{\dive}[1]{\mathbf{\nabla}\cdot \mathbf{#1}}
+\newcommand{\res}[2]{\text{Res}(#1,#2)}
+\newcommand{\fpartial}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\rot}[3]{\begin{vmatrix}\hat{x}&\hat{y}&\hat{z}\\\partial_x&\partial_y&\partial_z\\#1&#2&#3 \end{vmatrix}}
+\newcommand{\average}[1]{\langle #1 \rangle}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+
+
+%  --- Special character commands ---
+
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+\newcommand{\crr}{\mathcalligra{r}\,}
+\newcommand{\boldscriptr}{\pmb{\mathcalligra{r}}\,}
+
+
+\title{Handin 3}
+\author{Author : Andreas Evensen}
+\date{Date: \today}
+
+% --- Code ---
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Problem 1}
+Consider the one-dimensional Ising-model.
+
+\subsection*{a)}
+In the thermodynamics limit and $H = 0$, write an expression of the free energy $\mathcal{F}$. Determine the low and high temperature limits of $\mathcal{F}$ and explain what they imply.
+
+\newparagraph
+\textbf{Answer:} The partition function for the Ising model is given by:
+\begin{align*}
+    Z &= \sum_{\{S\}}\exp\left[h\sum_i S_i + K\sum_{\average{ij}}S_iS_j\right],
+\end{align*}and since $H = 0$, the first term is zero.
+\begin{align*}
+    Z &= \sum_{\{S\}}\exp\left[K\sum_{\average{ij}}S_iS_j\right].
+\end{align*}One rewrite the second sum in the following manner,
+\begin{align*}
+    Z &= \sum_{\{S\}}\exp\left[K\sum_{i = 1}^{N - 1}S_iS_{i+1}\right]\\
+    &= 2\left(2\cosh(K)\right)^{N-1}.
+\end{align*}The free energy is then given by:
+\begin{align*}
+    \mathcal{F} &= -k_bT\ln(Z)\\
+    &= -k_bT\ln\left(2\left(2\cosh(K)\right)^{N-1}\right)\\
+    &= -k_bT\left[\ln(2) + (N-1)\ln\left(2\cosh(K)\right)\right]\\
+    &= -k_bT\left[\ln(2) + (N-1)\ln\left(e^{K} + e^{-K}\right)\right]\\
+    &= -k_bT\left[\ln(2) + (N-1)\ln\left[e^K\left(1 + e^{-2K}\right)\right]\right]\\
+    &= -k_bT\left[\ln(2) + (N-1)\left(K + \ln\left(1 + e^{-2K}\right)\right)\right].
+\end{align*}The low and high temperature limits are given by:
+\begin{align*}
+    &\lim_{T\to0}\lim_{N\to\infty}\left[-k_bT\left[\ln(2) + (N-1)\left(K + \ln\left(1 + e^{-2K}\right)\right)\right]\right]\\
+    &= \lim_{T\to0}\lim_{N\to\infty}\left[-k_bT\left[N\left(\frac{J}{k_bT} + \ln\left(1 + e^{-\frac{2J}{k_bT}}\right)\right)\right]\right]\\
+    &= \lim_{T\to0}\lim_{N\to\infty}\left[-k_bT\left[N\left(\frac{J}{k_bT} + \ln\left(1 + e^{-\frac{2J}{k_bT}}\right)\right)\right]\right]\\
+    &= \lim_{N\to\infty}\left[-JN\right] = -\infty,\\
+    &\lim_{T\to\infty}\lim_{N\to\infty}\left(-k_bT\left[\ln(2) + (N-1)\left(K + \ln\left(1 + e^{-2K}\right)\right)\right]\right) = -\infty,\\
+\end{align*}In the thermodynamic limit, the free energy diverges.
+\subsection*{b)}
+Obtain expressions for the average energy $\average{E}$ and the heat-capacity $C$ using the expression of $\mathcal{F}$.
+
+\newparagraph
+\textbf{Answer:} The average energy is defined by:
+\begin{align*}
+    \average{E} &= -\frac{1}{Z}\fpartial{Z}{\beta}\\
+    &=-\frac{1}{\left(2\cosh(J\beta)\right)^{N-1}}\frac{\partial}{\partial \beta}\left[\left(2\cosh(J\beta)\right)^{N-1}\right]\\
+    &= -\frac{2}{\left(2\cosh(J\beta)\right)^{N-1}}\left(N-1\right)J\sinh(J\beta)\left(2\cosh(J\beta)\right)^{N-2}\\
+    &= -J\left(N-1\right)\tanh(J\beta).
+\end{align*}The heat capacity is defined by:
+\begin{align*}
+    C &= \fpartial{\average{E}}{T}\\
+    &= \fpartial{}{\beta}\left(-J\left(N-1\right)\tanh\left(\frac{J}{k_bT}\right)\right)\\
+    &= \frac{J^2}{k_bT^2}\frac{(N-1)}{\cosh^2\left(\frac{J}{k_bT}\right)}.
+\end{align*}
+
+\subsection*{c)}
+Consider now the Ising model in a field and write an expression for $\mathcal{F}$ (again in the thermodynamic limit).
+
+\newparagraph
+\textbf{Answer:} Now $H$ is non-zero, and thus the partition function is given by:
+\begin{align*}
+    Z &= \sum_{\{S\}}\exp\left[h\sum_i S_i + K\sum_{\average{ij}}S_iS_j\right].
+\end{align*}Furthermore, with introducing the transfer matrix, one obtains that the free energy can be written as:
+\begin{align*}
+    \mathcal{F} &= -k_bTN\ln\left[e^{K}\left(\cosh(h) + \sqrt{\sinh^2(h) + e^{-4K}}\right)\right]\\
+    &= -JN - k_bTN\ln\left[\cosh(h) + \sqrt{\sinh^2(h) + e^{-4K}}\right].
+\end{align*}
+
+\subsection*{d)}
+Compute the magnetization per spin $M$. What is $M$ in the limit $T\to0$?
+
+\newparagraph
+\textbf{Answer:} One computes the following expression for the magnetization per spin:
+\begin{align*}
+    M &= \frac{1}{N}\fpartial{\mathcal{F}}{H}\\
+    &= \frac{1}{k_bT}\fpartial{}{h}\left(- J - k_bT\ln\left[\cosh(h) + \sqrt{\sinh^2(h) + e^{-4K}}\right]\right)\\
+    &= \frac{\sinh^2(h)}{\cosh^2(h) + e^{-4K}}.
+\end{align*}
+\section*{Problem 2}
+Consider the $d = 1$ Ising-model with periodic boundary conditions.
+
+\subsection*{a)}
+Construct the matrix $\mathbf{S}$ which diagonalises the transfer matrix $\mathbf{T}$.
+You will find it useful to write the matrix elements in terms of the variable $\theta$ given by:
+\begin{align*}
+    \coth(2\theta) = e^{2K}\sinh(h).
+\end{align*}
+
+\newparagraph
+\textbf{Answer:} Firstly, we define the transfer matrix $\mathbf{T}$ as:
+\begin{align*}
+    \mathbf{T} = \begin{pmatrix}
+        e^{K + h} & e^{-K}\\
+        e^{-K}\ & e^{-h + K}
+    \end{pmatrix}.
+\end{align*}A matrix $\mathbf{S}$ that diagonalises $\mathbf{T}$ is given by:
+\begin{align}
+    \mathbf{T}' &= \mathbf{S}^{-1}\mathbf{T}\mathbf{S}\\
+    \begin{pmatrix}
+        \lambda_1 & 0\\
+        0 & \lambda_2
+    \end{pmatrix} &= \mathbf{S}^{-1}\begin{pmatrix}
+        e^{K + h} & e^{-K}\\
+        e^{-K}\ & e^{-h + K}
+    \end{pmatrix}\mathbf{S}.\label{eq: diagonalise}
+\end{align}One needs to find the eigenvalues of $\mathbf{T}$, which is achieved by solving the characteristic equation:
+\begin{align*}
+    \det\left(T - \lambda I\right) &= \begin{vmatrix}
+        e^{K + h} - \lambda & e^{-K}\\
+        e^{-K}\ & e^{-h + K} - \lambda
+    \end{vmatrix}\\
+    &=\left(e^{K + h} - \lambda\right)\cdot\left(e^{K - h} - \lambda\right) - e^{-2K}\\
+    &= \lambda^2 - \left(e^{K + h} + e^{K - h}\right)\lambda + e^{2K} - e^{-2K}\\
+\end{align*}The roots of this equation are given by:
+\begin{align*}
+    \lambda_{1,2} &= \frac{e^{K + h} + e^{K - h}}{2} \pm \sqrt{\left(\frac{e^{K + h} + e^{K - h}}{2}\right)^2 - e^{2K} + e^{-2K}}\\
+    &= e^{K}\left[\cosh(h) \pm \sqrt{\sinh^2(h) + e^{-4K}}\right].
+\end{align*}Thus, $\lambda_1$ and $\lambda_2$ are the eigenvalues of $\mathbf{T}$, i.e. $\lambda_{1,2} = e^{K}\left[\cosh(h) \pm \sqrt{\sinh^2(h) + e^{-4K}}\right]$.
+Furthermore, we seek the eigenvectors corresponding to the eigenvalues of $\mathbf{T}$. The eigenvectors are given by:
+\begin{align*}
+    (\lambda_1 \mathbf{I} - \mathbf{T})\mathbf{v}_1 &= \mathbf{0},\\
+    (\lambda_2 \mathbf{I} - \mathbf{T})\mathbf{v}_2 &= \mathbf{0}.
+\end{align*}Looking at the first equation, one obtains:
+\begin{align*}
+    \begin{pmatrix}
+        \lambda_1-e^{K + h} & -e^{-K}\\
+        -e^{-K}\ & \lambda_1-e^{-h + K}
+    \end{pmatrix}\begin{pmatrix}
+        v_{11}\\
+        v_{12}
+    \end{pmatrix}
+    &= \begin{pmatrix}
+        0\\
+        0
+    \end{pmatrix}\\
+    v_{11}\left(\lambda_1 - e^{K + h}\right) - v_{12} e^{-K} &= 0\\
+    v_{12}\left(\lambda_1 - e^{-h + K}\right) - v_{11} e^{-K} &= 0
+\end{align*}This implies that one can write the eigenvector of $\lambda_1$ as:
+\begin{align*}
+    \mathbf{v}_1 &= \begin{pmatrix}
+        v_{11}\\
+        v_{12}
+    \end{pmatrix} = \begin{pmatrix}
+        e^{-K}\\
+        -e^K\sinh(h)+\sqrt{e^{2K}\sinh^2(h) + e^{-2k}}
+    \end{pmatrix},
+\end{align*}and similarly, the eigenvector of $\lambda_2$ is given by:
+\begin{align*}
+    \mathbf{v}_2 &= \begin{pmatrix}
+        v_{21}\\
+        v_{22}
+    \end{pmatrix} = \begin{pmatrix}
+        -e^K\sinh(h)+\sqrt{e^{2K}\sinh^2(h) + e^{-2k}}\\
+        -e^{-K}\\
+    \end{pmatrix}.
+\end{align*}
+Using $\cot(2\theta) = e^{2K}\sinh(h)$, on the term $-e^{k}\sinh(h) + \sqrt{e^{2K}\sinh^2(h) + e^{-2K}}$, one gets:
+\begin{align*}
+    -e^{k}\sinh(h) + \sqrt{e^{2K}\sinh^2(h) + e^{-2K}} &= e^{-K}\left(-e^{2K}\sinh(h) + \sqrt{\cot^2(2\theta) + 1}\right)\\
+    &=e^{-K}\tan(\theta).
+\end{align*}Thus, the matrix $\mathbf{S}$ can be written as:
+\begin{align*}
+    \mathbf{S} &=\begin{pmatrix}
+        \cos(\theta) & -\sin(\theta)\\
+        \sin(\theta) &\cos(\theta)
+    \end{pmatrix}.
+\end{align*}
+
+\begin{comment}
+    \implies \lambda_1 - e^{K + h} v_{11} - e^{-K} v_{12} &= 0,\\
+    \lambda_1 - e^{-h + K} v_{12} - e^{-K} v_{11} &= 0\\
+    \implies \lambda_1 -  \frac{\lambda_1 e^{-h + K} v_{12}}{e^{-K}} - e^{-K} v_{12} &=0\\
+    \implies v_{12} = \frac{\lambda_1}{\left(\lambda_1 e^{-h + 2K} + e^{-K}\right)}&\\
+    \implies v_{11} = \frac{\lambda_1}{e^{-K}}\left(1 - \frac{1}{\left(\lambda_1 e^{-h + 2K} + e^{-K}\right)}\right)&
+\end{align*}Now looking at the term $\lambda_1e^{-h + 2K}$, one can rewrite it as:
+\begin{align*}
+    \lambda_1 e^{-h + 2K} &= e^{3K -h}\left[\cosh(h) + \sqrt{\sinh^2\left(h\right) + e^{-4K}}\right]\\
+    &=e^{K - h}\left[\cosh(h)e^{2K} + \sqrt{\coth^2(2\theta) + 1}\right]
+\end{align*}One does similar with the second equation, and obtains:
+\begin{align*}
+    v_{21} &= \frac{\lambda_2}{e^{-K}}\left(1 - \frac{1}{\left(\lambda_2 e^{-h + 2K} + e^{-K}\right)}\right),\\
+    v_{22} &= \frac{\lambda_2}{\left(\lambda_2 e^{-h + 2K} + e^{-K}\right)}.
+\end{align*}Thus, the matrix $\mathbf{S}$ is given by:
+\begin{align*}
+    \mathbf{S} &= \begin{pmatrix}
+        v_{11} & v_{21}\\
+        v_{12} & v_{22}
+    \end{pmatrix}.
+\end{align*}
+\end{comment}
+\begin{comment}
+Multiplying, from the right, with $\mathbf{S}$, one obtains:
+\begin{align*}
+    \mathbf{S}\begin{pmatrix}
+        \lambda_1 & 0\\
+        0 & \lambda_2
+    \end{pmatrix}
+    &= \begin{pmatrix}
+        e^{K + h} & e^{-K}\\
+        e^{-K}\ & e^{-h + K}
+    \end{pmatrix}\mathbf{S}.
+\end{align*}Labeling the elements of $\mathbf{S}$ as $s_{ij}$, and multiplying the matrices, one obtains:
+\begin{align*}
+    \begin{pmatrix}
+        \lambda_1 s_{11} & \lambda_2 s_{12}\\
+        \lambda_1 s_{21} & \lambda_2 s_{22}
+    \end{pmatrix} &= \begin{pmatrix}
+        e^{K + h}s_{11} + e^{-K}s_{21} & e^{K + h}s_{12} + e^{-K}s_{22}\\
+        e^{-K}s_{11} + e^{-h + K}s_{21} & e^{-K}s_{12} + e^{-h + K}s_{22}
+    \end{pmatrix}.
+\end{align*}From this, each element of the two matrices are equal, and thus one obtains the following equations, and substitute $e^{2K}\sinh(h) = \coth(2\theta)$:
+\begin{align*}
+    \left[e^{K}\cosh(h) + \sqrt{e^{2K}\left(\sinh^2(h) + e^{-4K}\right)}\right] s_{11} &= e^{K + h}s_{11} + e^{-K}s_{21},\\
+    \left[e^{K}\cosh(h) - \sqrt{e^{2K}\left(\sinh^2(h) + e^{-4K}\right)}\right] s_{12} &= e^{K + h}s_{12} + e^{-K}s_{22},\\
+    \left[e^{K}\cosh(h) + \sqrt{e^{2K}\left(\sinh^2(h) + e^{-4K}\right)}\right] s_{21} &= e^{-K}s_{11} + e^{-h + K}s_{21},\\
+    \left[e^{K}\cosh(h) - \sqrt{e^{2K}\left(\sinh^2(h) + e^{-4K}\right)}\right] s_{22} &= e^{-K}s_{12} + e^{-h + K}s_{22}.
+\end{align*}
+From this, one has two sets of equations:
+\begin{align}
+    \lambda_1 s_{11} + \lambda_2 s_{12} &= e^{K + h}s_{11} + e^{-K}s_{21} + e^{K + h}s_{12} + e^{-K}s_{22},\label{eq: expansion1},\\
+    \lambda_1 s_{21} + \lambda_2 s_{22} &= e^{-K}s_{11} + e^{K - h}s_{21} + e^{-K}s_{12} + e^{K-h}s_{22}\label{eq: expansion2}.
+\end{align}Expanding equation \eqref{eq: expansion1}, with the corresponding eigenvalues, and divided by $e^{K}$, one obtains:
+\begin{align*}
+    s_{11}\left[\cosh(h) + \sqrt{\sinh^2(h) + e^{-4K}}\right] + s_{12}\left[\cosh(h) - \sqrt{\sinh^2(h) + e^{-4K}}\right] &= e^{h}s_{11} + e^{-2K}s_{21} + e^{h}s_{12} + e^{-2K}s_{22}.
+\end{align*}
+\end{comment}
+
+
+\subsection*{b)}
+Derive the relation:
+\begin{align*}
+    \average{S_i} &= \frac{\trace\left(\mathbf{S}^{-1}\sigma_z\mathbf{S}\mathbf{T}'^N\right)}{Z_N},
+\end{align*}and use your answer from part a) to show that $\average{S_i} = \cos(2\theta)$ as $N\to\infty$.
+Similarly compute $\average{S_iS_j}$ and hence show that in the thermodynamics limit:
+\begin{align*}
+    G(i, i + j) &=\average{S_iS_j} - \average{S_i}\average{S_j}\\
+    &=\sin^2\left(2\theta\right)\left(\frac{\lambda_2}{\lambda_1}\right)^j.
+\end{align*}
+
+\newparagraph
+\textbf{Answer:} We begin by stating that the average spin of a particle $i$ is given by:
+\begin{align*}
+    \average{S_i} &=\frac{1}{Z_n}\sum_{S_1}...\sum_{S_{N}}T_{S_1, S_2}...T_{S_{i-1}, S_{i}}S_i... T_{S_{N-1}, S_N}\\
+    &= \frac{1}{Z_n}\sum_{S_1}...\sum_{S_N}...\mathbf{T}\underbrace{\begin{pmatrix}1&0\\0&-1\end{pmatrix}}_{=\sigma_z}\mathbf{T}...\mathbf{T}\sigma_z\mathbf{T},
+\end{align*}This then yields that the average spin of particle $i$ can be written as:
+\begin{align*}
+    \average{S_i} &=\frac{\trace\left(\sigma_z\mathbf{T}^N\right)}{Z_n}.
+\end{align*}From this, one then inverts eq \eqref{eq: diagonalise}, such that $\mathbf{T} = \mathbf{S}\mathbf{T}'\mathbf{S}^{-1}$, and thus:
+\begin{align*}
+    \average{S_i} &= \frac{\trace\left(\sigma_z \left[\mathbf{S}\mathbf{T}'\mathbf{S}^{-1}\right]^N\right)}{Z_n}.
+\end{align*}From this, one expands the $(\mathbf{S}T'\mathbf{S}^{-1})^N$ term and utilizes that $\mathbf{S}^{-1}\cdot\mathbf{S} = \mathbf{I}$, such that one obtain:
+\begin{align*}
+    \average{S_i} &= \frac{\trace\left(\sigma_z\mathbf{S}\mathbf{T}'\mathbf{S}^{-1}\mathbf{S}T'...\mathbf{S}T'\mathbf{S}^{-1}\right)}{Z_N}\\
+    \average{S_i} &= \frac{\trace\left(\mathbf{S}^{-1}\sigma_z\mathbf{S}\mathbf{T}'^N\right)}{Z_N}.
+\end{align*}In order to evaluate $\average{S_i}$ in the thermodynamic limit, one has to evaluate the expression $\mathbf{S}^{-1}\sigma_z\mathbf{S}$
+\begin{align*}
+    \mathbf{S}^{-1}\sigma_z\mathbf{S} &= \begin{pmatrix}
+        \cos(\theta) & \sin(\theta)\\
+        -\sin(\theta) &\cos(\theta)
+    \end{pmatrix}\cdot\begin{pmatrix}
+        1 & 0 \\
+        0 & -1
+    \end{pmatrix}\cdot\begin{pmatrix}
+        \cos(\theta) & -\sin(\theta)\\
+        \sin(\theta) &\cos(\theta)
+    \end{pmatrix}\\ &= \begin{pmatrix}
+        \cos(2\theta) & -\sin(2\theta)\\
+        -\sin(2\theta) &-\cos(2\theta)
+    \end{pmatrix}.
+\end{align*}Thus, $\average{S_i}$ can be expressed as:
+\begin{align*}
+    \average{S_i} &= \frac{\trace\left(\mathbf{S}^{-1}\sigma_z\mathbf{S}\mathbf{T}'^N\right)}{Z_N}\\
+    &= \frac{\trace\left(\underbrace{\begin{pmatrix}
+        \cos(2\theta) & -\sin(2\theta)\\
+        -\sin(2\theta) &-\cos(2\theta)
+    \end{pmatrix}}_{=\mathbf{\delta}}\cdot\begin{pmatrix}
+        \lambda_1^N & 0\\
+        0 & \lambda_2^N
+    \end{pmatrix}\right)}{\trace\left(T^N\right)}
+\end{align*}In the thermodynamic limit, this then simplifies to:
+\begin{align*}
+    \average{S_i} &= \cos(2\theta).
+\end{align*}The correlation term $\average{S_iS_j}$ is then given by:
+\begin{align*}
+    \average{S_iS_j} &= \frac{1}{\trace\left(T^N\right)}\left(\mathbf{T}'^i\cdot \mathbf{\delta}\mathbf{T}'^j\mathbf{\delta}\mathbf{T}'^{N - i - j}\right).
+\end{align*}This, in the thermodynamic limit, can be written as:
+\begin{align*}
+    \average{S_iS_j} &= \cos^2(2\theta) + \sin^2(2\theta)\left(\frac{\lambda_2}{\lambda_1}\right)^j.
+\end{align*}Finally, the correlation function $G(i, i + j)$ is given by:
+\begin{align*}
+    G(i, i + j) &=\average{S_iS_j} - \average{S_i}\average{S_j}\\
+    &=\cos^2(2\theta) + \sin^2\left(2\theta\right)\left(\frac{\lambda_2}{\lambda_1}\right)^j - \cos^2\left(2\theta\right)\\
+    &= \sin^2\left(2\theta\right)\left(\frac{\lambda_2}{\lambda_1}\right)^j.
+\end{align*}
+
+\subsection*{c)}
+Calculate the isothermal suspectability $\chi_T$ from the formula given for $M(H)$ in the text.
+Verify explicitly that $\chi_T = \sum_j G(i, i+j)$ (in the thermodynamic limit the sum runs from $-\infty\to\infty)$.
+
+\newparagraph
+\textbf{Answer:} The isothermal susceptibility is defined by:
+\begin{align*}
+    \chi_T &= \fpartial{M}{H}.
+\end{align*}The magnetization per spin is given by:
+\begin{align*}
+    M &= \sum_{i = 1}^N\average{S_i} = N\cos(2\theta).
+\end{align*}Thus, the isothermal susceptibility is given by:
+\begin{align*}
+    \chi_T &= \fpartial{M}{H} = N\fpartial{\cos(2\theta)}{H}\\
+    &= N\beta\fpartial{\cos(2\theta)}{h}\\
+    &= -N\beta\sin(2\theta)\fpartial{\theta}{h}.
+\end{align*}We now need to find an explicit expression for $\theta$ which one does from $\cot(2\theta) = e^{2K}\sinh(h)$, such that:
+\begin{align*}
+    \theta &= \frac{1}{2}\cot^{-1}\left(e^{2K}\sinh(h)\right).
+\end{align*}This then yields:
+\begin{align*}
+    \chi_T &=-N\beta\sin(2\theta)\fpartial{\theta}{h}\\
+    &= -N\beta\sin\left(2\theta\right)\fpartial{}{h}\left(\frac{1}{2}\cot^{-1}\left(e^{2K}\sinh(h)\right)\right)\\
+    &= N\beta2\sin^3\left(2\theta\right)e^{2K}\cosh(h).
+\end{align*}
+To prove that the magnetic susceptibility is given by $\chi_T = \sum_j G(i, i+j)$, one needs to evaluate the sum:
+\begin{align*}
+    \sum_j G(i, i+j) &= \sum_j \sin^2\left(2\theta\right)\left(\frac{\lambda_2}{\lambda_1}\right)^j\\
+    &= \sin^2\left(2\theta\right)\sum_j\left(\frac{\lambda_2}{\lambda_1}\right)^j\\
+    &= \sin^2(2\theta)\sum_j\left(\frac{e^{K}\left[\cosh(h) - \sqrt{\sinh^2(h) + e^{-4K}}\right]}{e^{K}\left[\cosh(h) + \sqrt{\sinh^2(h) + e^{-4K}}\right]}\right)^j
+\end{align*}
+
+
+\subsection*{d)} 
+We will now consider what happens at the boundaries. Consider the partition function:
+\begin{align*}
+    Z(h, K) &= \sum_{S_1}\cdot...\sum_{S_N} \exp\left[h\left(S_1 + ...+ S_N\right) + K\left(S_1S_2 + ... + S_{N-1}S_N\right)\right].
+\end{align*}In this case, the partition function is not simply $Z = \trace\left(\mathbf{T}'\right)^N$.
+Work out what the correct expression is, you will have to introduce a new matrix in addition to $\mathbf{T}$, and show that the free energy is given by:
+\begin{align*}
+    \mathcal{F} &= N f_b(h, K) + f_s(h, K) + F_{f_s}(N, h, K),
+\end{align*}where $f_b$ is the bulk free energy, $f_s$ is the surface free energy and $F_{f_s}$ is an intrinsic finite size contribution that depends on the system size as $e^{-C(h, K)N}$, where $C$ is function.
+
+\newparagraph
+\textbf{Answer:}
+\subsection*{e)}
+Check that in the case $h = 0$ and $N\to\infty$, your result for the surface free energy agrees with that obtained from $\lim_{N\to\infty}\mathcal{F}_N^{free}- \mathcal{F}_N^{periodic}$.
+
+\newparagraph
+\textbf{Answer:}
+
+
+
+
+\end{document}
+ 
