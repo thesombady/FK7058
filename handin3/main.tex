@@ -263,7 +263,7 @@ Using $\cot(2\theta) = e^{2K}\sinh(h)$, on the term $-e^{k}\sinh(h) + \sqrt{e^{2
 \begin{align*}
     -e^{k}\sinh(h) + \sqrt{e^{2K}\sinh^2(h) + e^{-2K}} &= e^{-K}\left(-e^{2K}\sinh(h) + \sqrt{\cot^2(2\theta) + 1}\right)\\
     &=e^{-K}\tan(\theta).
-\end{align*}Thus, the matrix $\mathbf{S}$ can be written as:
+\end{align*}Thus, the matrix $\mathbf{S}$ can be written as, after normalizing the eigenvectors, i.e $\mathbf{v_{i}}/\norm{\mathbf{v_{i}}}$:
 \begin{align*}
     \mathbf{S} &=\begin{pmatrix}
         \cos(\theta) & -\sin(\theta)\\
@@ -400,7 +400,7 @@ Similarly compute $\average{S_iS_j}$ and hence show that in the thermodynamics l
 
 \subsection*{c)}
 Calculate the isothermal suspectability $\chi_T$ from the formula given for $M(H)$ in the text.
-Verify explicitly that $\chi_T = \sum_j G(i, i+j)$ (in the thermodynamic limit the sum runs from $-\infty\to\infty)$.
+Verify explicitly that $\chi_T = \beta\sum_j G(i, i+j)$ (in the thermodynamic limit the sum runs from $-\infty\to\infty)$.
 
 \newparagraph
 \textbf{Answer:} The isothermal susceptibility is defined by:
@@ -413,22 +413,24 @@ Verify explicitly that $\chi_T = \sum_j G(i, i+j)$ (in the thermodynamic limit t
 \begin{align*}
     \chi_T &= \fpartial{M}{H} = N\fpartial{\cos(2\theta)}{H}\\
     &= N\beta\fpartial{\cos(2\theta)}{h}\\
-    &= -N\beta\sin(2\theta)\fpartial{\theta}{h}.
+    &= -N\beta\sin(2\theta)\fpartial{2\theta}{h}.
 \end{align*}We now need to find an explicit expression for $\theta$ which one does from $\cot(2\theta) = e^{2K}\sinh(h)$, such that:
 \begin{align*}
     \theta &= \frac{1}{2}\cot^{-1}\left(e^{2K}\sinh(h)\right).
 \end{align*}This then yields:
 \begin{align*}
     \chi_T &=-N\beta\sin(2\theta)\fpartial{\theta}{h}\\
-    &= -N\beta\sin\left(2\theta\right)\fpartial{}{h}\left(\frac{1}{2}\cot^{-1}\left(e^{2K}\sinh(h)\right)\right)\\
-    &= N\beta2\sin^3\left(2\theta\right)e^{2K}\cosh(h).
+    &= -2N\beta\sin\left(2\theta\right)\fpartial{}{h}\left(\frac{1}{2}\cot^{-1}\left(e^{2K}\sinh(h)\right)\right)\\
+    &= N\beta\sin^3\left(2\theta\right)e^{2K}\cosh(h).
 \end{align*}
 To prove that the magnetic susceptibility is given by $\chi_T = \sum_j G(i, i+j)$, one needs to evaluate the sum:
 \begin{align*}
     \sum_j G(i, i+j) &= \sum_j \sin^2\left(2\theta\right)\left(\frac{\lambda_2}{\lambda_1}\right)^j\\
-    &= \sin^2\left(2\theta\right)\sum_j\left(\frac{\lambda_2}{\lambda_1}\right)^j\\
-    &= \sin^2(2\theta)\sum_j\left(\frac{e^{K}\left[\cosh(h) - \sqrt{\sinh^2(h) + e^{-4K}}\right]}{e^{K}\left[\cosh(h) + \sqrt{\sinh^2(h) + e^{-4K}}\right]}\right)^j
-\end{align*}
+    &= N\sin^2\left(2\theta\right)\left(\frac{\lambda_1 + \lambda_2}{\lambda_1 - \lambda_2}\right)\\
+    &= N\sin^2\left(2\theta\right)\left(\frac{e^{-K}\sqrt{\cot^2(2\theta) + 1}}{e^{K}\cosh(h)}\right)^{-1}\\
+    &= N\sin^2\left(2\theta\right)\left(\sin(2\theta)e^{2K}\cosh(h)\right)\\
+    &= N\sin^3\left(2\theta\right)e^{2K}\cosh(h).
+\end{align*}Since the $\beta G(i, i+j) = \chi_T$ one has proved that the identify holds.
 
 
 \subsection*{d)} 
