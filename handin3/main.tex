@@ -430,13 +430,13 @@ To prove that the magnetic susceptibility is given by $\chi_T = \sum_j G(i, i+j)
     &= N\sin^2\left(2\theta\right)\left(\frac{e^{-K}\sqrt{\cot^2(2\theta) + 1}}{e^{K}\cosh(h)}\right)^{-1}\\
     &= N\sin^2\left(2\theta\right)\left(\sin(2\theta)e^{2K}\cosh(h)\right)\\
     &= N\sin^3\left(2\theta\right)e^{2K}\cosh(h).
-\end{align*}Since the $\beta G(i, i+j) = \chi_T$ one has proved that the identify holds.
+\end{align*}Since the $\beta G(i, i+j) = \chi_T$ one has proved that the identity holds.
 
 
 \subsection*{d)} 
 We will now consider what happens at the boundaries. Consider the partition function:
 \begin{align*}
-    Z(h, K) &= \sum_{S_1}\cdot...\sum_{S_N} \exp\left[h\left(S_1 + ...+ S_N\right) + K\left(S_1S_2 + ... + S_{N-1}S_N\right)\right].
+    Z(h, K) &= \sum_{S_1}...\sum_{S_N} \exp\left[h\left(S_1 + ...+ S_N\right) + K\left(S_1S_2 + ... + S_{N-1}S_N\right)\right].
 \end{align*}In this case, the partition function is not simply $Z = \trace\left(\mathbf{T}'\right)^N$.
 Work out what the correct expression is, you will have to introduce a new matrix in addition to $\mathbf{T}$, and show that the free energy is given by:
 \begin{align*}
@@ -444,12 +444,92 @@ Work out what the correct expression is, you will have to introduce a new matrix
 \end{align*}where $f_b$ is the bulk free energy, $f_s$ is the surface free energy and $F_{f_s}$ is an intrinsic finite size contribution that depends on the system size as $e^{-C(h, K)N}$, where $C$ is function.
 
 \newparagraph
-\textbf{Answer:}
+\textbf{Answer:} We begin by rewriting the partition function:
+\begin{align*}
+    Z(h, K) &= \sum_{S_1}...\sum_{S_N} \exp\left[h\left(S_1 + ...+ S_N\right) + K\left(S_1S_2 + ... + S_{N-1}S_N\right)\right]\\
+    &= \sum_{S_1}...\sum_{S_N}e^{\frac{h}{2}(S_1 + S_2) + KS_1S_2}...e^{\frac{h}{2}(S_{N - 1}S_N) + KS_{N-1}S_N}e^{\frac{h}{2}(S_NS_1)}\\
+    &= \trace\left(\underbrace{\begin{pmatrix}
+        e^{\frac{h}{2} + K} & e^{-\frac{h}{2}}\\
+        e^{-\frac{h}{2}} & e^{\frac{h}{2} + K}
+    \end{pmatrix}^{N-1}}_{\mathbf{T}^{N-1}}\cdot\underbrace{\begin{pmatrix}
+        e^h & 1\\
+        1 & e^{-h}
+    \end{pmatrix}}_{\mathbf{T_b}}\right).
+\end{align*}From here, one diagonalises the matrix $\mathbf{T}$ and $\mathbf{T_b}$, such that:
+\begin{align*}
+    \mathbf{T} &= \mathbf{S}^{-1}\mathbf{T}'\mathbf{S},\\
+    \mathbf{T_b} &= \mathbf{S_b}^{-1}\mathbf{T_b}'\mathbf{S_b}\\
+    \implies Z(h, K) &= \trace\left[\left(\mathbf{S}^{-1}\mathbf{T}'\mathbf{S}\right)^{N-1}\mathbf{S}^{-1}\mathbf{T_b}\mathbf{S}\right]\\
+    &= \trace\left[\begin{pmatrix}
+        \lambda_1^{N-1} & 0\\
+        0 & \lambda_2^{N-1}
+    \end{pmatrix}\cdot\mathbf{T_b}'\right]
+\end{align*}One computes $\mathbf{T_b}'$ such that:
+\begin{align*}
+    \mathbf{T_b}' &= \mathbf{S_b}^{-1}\mathbf{T_b}\mathbf{S_b}\\
+    &= \mathbf{S_b}^{-1}\begin{pmatrix}
+        e^h & 1\\
+        1 & e^{-h}
+    \end{pmatrix}\mathbf{S_b}\\
+    &= \begin{pmatrix}
+        \cos(\theta) & \sin(\theta)\\
+        -\sin(\theta) & \cos(\theta)
+    \end{pmatrix}\cdot\begin{pmatrix}
+        e^h & 1\\
+        1 & e^{-h}
+    \end{pmatrix}\cdot\begin{pmatrix}
+        \cos(\theta) & -\sin(\theta)\\
+        \sin(\theta) & \cos(\theta)
+    \end{pmatrix},
+\end{align*}writing out the matrix multiplication, one obtains, where $c$ is $\cos(\theta)$, and $s = \sin(\theta)$:
+\begin{align*}
+    \mathbf{T_b}' &= \begin{pmatrix}
+        c^2e^{K + h} + 2cse^{-K} + s^2e^{K - h} & (c^2 - s^2)e^{-K} - sc\left(e^{K + h} - e^{K - h}\right)\\
+        (c^2 - s^2)e^{-K} - sc\left(e^{K + h} - e^{K - h}\right) & c^2e^{K - h} - 2cse^{-K} + s^2e^{K + h}
+    \end{pmatrix}
+\end{align*}Thus, one has derived the correction term to the partition function. In order to compute the free energy, one has to simplify the partition function further:
+\begin{align*}
+    Z(h, K) &= \trace\left(\mathbf{T}'^{N-1}\mathbf{T_b}'\right) = \lambda_1^{N-1}\left[\cosh(h) +\cos(2\theta)\sinh(h) + \sin(2\theta)\right]\\
+    & + \lambda_2^{N - 1}\left[\cos(2\theta)\cosh(h) - \sinh(h) - \sin(2\theta)\right].
+\end{align*}From this, one computes the free energy as:
+\begin{align*}
+    \mathcal{F} &= -k_bT\ln(Z) = -k_bT\ln\left[\lambda_1^{N-1}\left[\cosh(h) +\cos(2\theta)\sinh(h) + \sin(2\theta)\right]\right.\\
+    &\left. + \lambda_2^{N - 1}\left[\cos(2\theta)\cosh(h) - \sinh(h) - \sin(2\theta)\right]\right]\\
+    &= -k_bT\left[N - 1\right]\ln(\lambda_1) - k_bT\ln\left[\cosh(h) +\cos(2\theta)\sinh(h) + \sin(2\theta)\right]\\
+    & - k_bT\ln\left[1 + \left(\frac{\lambda_2}{\lambda_1}\right)^{N-1}\frac{\cosh(h) +\cos(2\theta)\sinh(h) + \sin(2\theta)}{\cos(2\theta)\cosh(h) - \sinh(h) - \sin(2\theta)}\right].
+\end{align*}In the thermodynamic limit $N\to\infty$ one can write the free energy as:
+\begin{align*}
+    \mathcal{F} &= Nf_b(h, K) + f_s(h, K) + F_{f_s}(N, h, K),\\
+    f_b(h, K) &= -k_bT\ln(\lambda_1),\\
+    f_s(h, K) &= -k_bT\ln\left[\cosh(h) +\cos(2\theta)\sinh(h) + \sin(2\theta)\right],\\
+    F_{f_s}(N, h, K) &= -k_bT\ln\left[1 + \frac{\lambda_2}{\lambda_1}^{N-1}\frac{\cosh(h) +\cos(2\theta)\sinh(h) + \sin(2\theta)}{\cos(2\theta)\cosh(h) - \sinh(h) - \sin(2\theta)}\right].
+\end{align*}In order to prove that $F_{f_s}$ is an intrinsic finite size contribution, one has to show that it depends on the system size as $e^{-C(h, K)N}$. One can write $F_{f_s}$ as:
+\begin{align*}
+    F_{f_s}(N, h, K) &= k_bT\ln\left[1 + \left(\frac{\lambda_2}{\lambda_1}\right)^{N-1}\frac{\cosh(h) +\cos(2\theta)\sinh(h) + \sin(2\theta)}{\cos(2\theta)\cosh(h) - \sinh(h) - \sin(2\theta)}\right]\\
+    &=\exp\left[\ln\left[k_bT\ln\left[1 + \left(\frac{\lambda_2}{\lambda_1}\right)^{N-1}\frac{\cosh(h) +\cos(2\theta)\sinh(h) + \sin(2\theta)}{\cos(2\theta)\cosh(h) - \sinh(h) - \sin(2\theta)}\right]\right]\right]\\
+    &\sim\exp\left[N\ln\left[\frac{\lambda_2}{\lambda_1}\right]\right].
+\end{align*}Thus, one has showed that, in the thermodynamic limit, $F_{f_s}$ depends on the system size as $e^{-C(h, K)N}$.
+
 \subsection*{e)}
 Check that in the case $h = 0$ and $N\to\infty$, your result for the surface free energy agrees with that obtained from $\lim_{N\to\infty}\mathcal{F}_N^{free}- \mathcal{F}_N^{periodic}$.
 
 \newparagraph
-\textbf{Answer:}
+\textbf{Answer:} We rewrite the expression for the surface free energy $f_s$ previously obtained, with hyperbolic functions:
+\begin{align*}
+    f_s(h, K) &= -k_bT\ln\left[\cosh(h) +\cos(2\theta)\sinh(h) + \sin(2\theta)\right]\\
+    &= -k_bT \ln\left[\frac{\cosh(h) + \frac{\sinh^2(h)}{\sqrt{\sinh^2(h) + e^{-4K}}} + \frac{e^{-2K}}{\sqrt{\sinh^2(h) + e^{-4K}}}}{e^{K}\left(\cosh(h) + \sqrt{\sinh^2(h) + e^{-4k}}\right)}\right].
+\end{align*}In the case $h = 0$, this reduces to:
+\begin{align*}
+    f_s(0, K)&= -k_bT \ln\left[\frac{1 + \frac{0}{\sqrt{0 + e^{-4K}}} + \frac{e^{-2K}}{\sqrt{0 + e^{-4K}}}}{e^{K}\left(1 + \sqrt{0 + e^{-4k}}\right)}\right]\\
+    &= -k_bT\ln\left[\frac{2}{e^K + e^{-K}}\right] = -k_bT\ln\left[\frac{1}{\cosh(h)}\right].
+\end{align*}Thus, we now evaluate the limit:
+\begin{align*}
+    f_s &= \lim_{N\to\infty}\left(\mathcal{F}_N^{free} - \mathcal{F}_N^{periodic}\right)\\
+    &= \lim_{N\to\infty}\left(-k_bT(N-1)\ln(2\cosh(K)) - k_bT\ln(2) - k_bT\ln\left[(2\cosh(K))^N + (2\sinh(K))^N\right]\right)\\
+    &= -k_bT\lim_{N\to\infty}\left[(N-1)\ln(2\cosh(K)) +\ln(2) - \left(\ln(2\cosh(K))^N + \ln\left(1 + \tanh(K)^N\right)\right)\right]\\
+    &= -k_bT\left(\ln(2\cosh(K)) + \ln(2)\right) = -k_bT \frac{1}{\cosh(K)}.
+\end{align*}Thus, we have showed that the surface energy that we obtained previously holds.
+
 
 
 
