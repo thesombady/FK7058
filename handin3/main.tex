@@ -169,7 +169,7 @@ Consider now the Ising model in a field and write an expression for $\mathcal{F}
 \begin{align*}
     \mathcal{F} &= -k_bTN\ln\left[e^{K}\left(\cosh(h) + \sqrt{\sinh^2(h) + e^{-4K}}\right)\right]\\
     &= -JN - k_bTN\ln\left[\cosh(h) + \sqrt{\sinh^2(h) + e^{-4K}}\right].
-\end{align*}
+\end{align*}I derive the expression for the partition function in the second part of the handin.
 
 \subsection*{d)}
 Compute the magnetization per spin $M$. What is $M$ in the limit $T\to0$?
@@ -263,7 +263,7 @@ Using $\cot(2\theta) = e^{2K}\sinh(h)$, on the term $-e^{k}\sinh(h) + \sqrt{e^{2
 \begin{align*}
     -e^{k}\sinh(h) + \sqrt{e^{2K}\sinh^2(h) + e^{-2K}} &= e^{-K}\left(-e^{2K}\sinh(h) + \sqrt{\cot^2(2\theta) + 1}\right)\\
     &=e^{-K}\tan(\theta).
-\end{align*}Thus, the matrix $\mathbf{S}$ can be written as, after normalizing the eigenvectors, i.e $\mathbf{v_{i}}/\norm{\mathbf{v_{i}}}$:
+\end{align*}Thus, the matrix $\mathbf{S}$ can be written as, after normalizing the eigenvectors, i.e. $\mathbf{v_{i}}/\norm{\mathbf{v_{i}}}$:
 \begin{align*}
     \mathbf{S} &=\begin{pmatrix}
         \cos(\theta) & -\sin(\theta)\\
@@ -359,7 +359,7 @@ Similarly compute $\average{S_iS_j}$ and hence show that in the thermodynamics l
     \average{S_i} &= \frac{\trace\left(\mathbf{S}^{-1}\sigma_z\mathbf{S}\mathbf{T}'^N\right)}{Z_N}.
 \end{align*}In order to evaluate $\average{S_i}$ in the thermodynamic limit, one has to evaluate the expression $\mathbf{S}^{-1}\sigma_z\mathbf{S}$
 \begin{align*}
-    \mathbf{S}^{-1}\sigma_z\mathbf{S} &= \begin{pmatrix}
+    \delta = \mathbf{S}^{-1}\sigma_z\mathbf{S} &= \begin{pmatrix}
         \cos(\theta) & \sin(\theta)\\
         -\sin(\theta) &\cos(\theta)
     \end{pmatrix}\cdot\begin{pmatrix}
@@ -419,11 +419,11 @@ Verify explicitly that $\chi_T = \beta\sum_j G(i, i+j)$ (in the thermodynamic li
     \theta &= \frac{1}{2}\cot^{-1}\left(e^{2K}\sinh(h)\right).
 \end{align*}This then yields:
 \begin{align*}
-    \chi_T &=-N\beta\sin(2\theta)\fpartial{\theta}{h}\\
+    \chi_T &=-2N\beta\sin(2\theta)\fpartial{\theta}{h}\\
     &= -2N\beta\sin\left(2\theta\right)\fpartial{}{h}\left(\frac{1}{2}\cot^{-1}\left(e^{2K}\sinh(h)\right)\right)\\
     &= N\beta\sin^3\left(2\theta\right)e^{2K}\cosh(h).
 \end{align*}
-To prove that the magnetic susceptibility is given by $\chi_T = \sum_j G(i, i+j)$, one needs to evaluate the sum:
+To prove that the magnetic susceptibility is given by $\chi_T = \beta\sum_j G(i, i+j)$, one needs to evaluate the sum:
 \begin{align*}
     \sum_j G(i, i+j) &= \sum_j \sin^2\left(2\theta\right)\left(\frac{\lambda_2}{\lambda_1}\right)^j\\
     &= N\sin^2\left(2\theta\right)\left(\frac{\lambda_1 + \lambda_2}{\lambda_1 - \lambda_2}\right)\\
@@ -527,7 +527,7 @@ Check that in the case $h = 0$ and $N\to\infty$, your result for the surface fre
     f_s &= \lim_{N\to\infty}\left(\mathcal{F}_N^{free} - \mathcal{F}_N^{periodic}\right)\\
     &= \lim_{N\to\infty}\left(-k_bT(N-1)\ln(2\cosh(K)) - k_bT\ln(2) - k_bT\ln\left[(2\cosh(K))^N + (2\sinh(K))^N\right]\right)\\
     &= -k_bT\lim_{N\to\infty}\left[(N-1)\ln(2\cosh(K)) +\ln(2) - \left(\ln(2\cosh(K))^N + \ln\left(1 + \tanh(K)^N\right)\right)\right]\\
-    &= -k_bT\left(\ln(2\cosh(K)) + \ln(2)\right) = -k_bT \frac{1}{\cosh(K)}.
+    &= -k_bT \frac{1}{\cosh(K)}.
 \end{align*}Thus, we have showed that the surface energy that we obtained previously holds.
 
 
