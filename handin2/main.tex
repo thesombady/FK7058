@@ -153,7 +153,7 @@ Calculate the average energy of this system.
 \newparagraph
 \textbf{Answer:} The average energy of the system is given by:
 \begin{align*}
-    \average{E} &= \frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
+    \average{E} &= -\frac{1}{Z}\frac{\partial Z}{\partial \beta}\\
     &= -\frac{1}{Z}\frac{\partial}{\partial \beta}\left[e^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]\right]\\
     &= -\frac{1}{Z}\left[Je^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right] + e^{\beta J}\left(-4Je^{-2\beta J} +4H\sinh(2\beta H)\right)\right]\\
     &= -\frac{Je^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right] + e^{\beta J}\left(-4Je^{-2\beta J} +4H\sinh(2\beta H)\right)}{e^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]}\\
@@ -189,10 +189,10 @@ One computes the derivative of the free energy with respect to $H$:
     M &=-\frac{1}{2}\frac{\partial F}{\partial H} = -\frac{1}{2}\frac{\partial}{\partial H}\left(-k_bT\ln(Z)\right)\\
     &=\frac{k_bT}{2}\frac{\partial}{\partial H}\left[\ln\left(e^{\beta J}\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]\right)\right]\\
     &=\frac{k_bT}{2}\frac{\partial}{\partial H}\left(\ln\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]\right)\\
-    &=\frac{1}{2}\frac{2 \sinh(2\beta H)}{e^{-J\beta} + 2\cosh(2\beta H)}.
+    &=\frac{1}{2}\frac{4 \sinh(2\beta H)}{2e^{-J\beta} + 2\cosh(2\beta H)}.
 \end{align*}When $H = 0$ one has that the magnetization per unit spin is given by:
 \begin{align*}
-    M(H = 0) &= \frac{1}{2}\frac{2 \cdot 0}{e^{-J\beta} + 2} = 0.
+    M(H = 0) &= \frac{1}{2}\frac{4 \cdot 0}{2e^{-J\beta} + 2} = 0.
 \end{align*}
 \begin{comment}
 One can write the $\average{S_1}$ and $\average{S_2}$ as:
@@ -233,9 +233,9 @@ What is $M$ in the limit $T\to 0$?
 \newparagraph
 \textbf{Answer:}We can rewrite the limit as $\beta\to\infty$, which gives the following:
 \begin{align*}
-    \lim_{\beta\to\infty}M&= \lim_{\beta\to\infty}\left(\frac{1}{2}\frac{2 \sinh(2\beta H)}{e^{-J\beta} + 2\cosh(2\beta H)}\right)\\
-    &= \lim_{\beta\to\infty}\left(\frac{\sinh(2\beta H)}{\cosh(2\beta H)}\right) = \lim_{\beta\to\infty}\left(\tanh(2\beta H)\right) = \mp 1,
-\end{align*}The magnetization per unit spin $M$ is then given by $\mp 1$ in the limit $T\to 0$, depending on the sign of $H$.
+    \lim_{\beta\to\infty}M&= \lim_{\beta\to\infty}\left(\frac{1}{2}\frac{4 \sinh(2\beta H)}{2e^{-J\beta} + 2\cosh(2\beta H)}\right)\\
+    &= \lim_{\beta\to\infty}\left(\frac{\sinh(2\beta H)}{\cosh(2\beta H)}\right) = \lim_{\beta\to\infty}\left(\tanh(2\beta H)\right) = \pm 1,
+\end{align*}The magnetization per unit spin $M$ is then given by $\pm 1$ in the limit $T\to 0$, depending on the sign of $H$.
 
 \subsection*{7)}
 Calculate $\average{S_1 \cdot S_2} - \average{S_1}\average{S_2}$ the connected correlation function.
@@ -261,7 +261,7 @@ Calculate $\average{S_1 \cdot S_2} - \average{S_1}\average{S_2}$ the connected c
     &= \frac{\left(2\cosh(2\beta H)-2e^{-2\beta J}\right)\cdot(2e^{-2\beta J} + 2\cosh(2\beta H))}{(2e^{-2\beta J} + 2\cosh(2\beta H))^2} - \left(\frac{\sinh(2H\beta)}{\left[2e^{-2\beta J} + 2\cosh(2\beta H)\right]}\right)^2\\
     &= \frac{4\cosh^2\left(2H\beta\right) - 4 e^{-4\beta J}-\sinh^2\left(2H\beta\right)}{(2e^{-2\beta J} + 2\cosh(2\beta H))^2}\\
     &= \frac{4 - 4 e^{-4\beta J}}{(2e^{-2\beta J} + 2\cosh(2\beta H))^2}\\
-    &= \frac{1-e^{-4\beta J}}{\left(e^{-2\beta J} + 2\cosh(2\beta H)\right)^2}.
+    &= \frac{1-e^{-4\beta J}}{\left(e^{-2\beta J} + \cosh(2\beta H)\right)^2}.
 \end{align*}
 
 \subsection*{8)}
@@ -273,11 +273,25 @@ Show that, if we change the Hamiltonian of the system so that:
 \newparagraph
 \textbf{Answer:} We first define the partition function:
 \begin{align*}
-    Z &= \sum_i e^{-\beta \mathcal{H}_i}.
+    Z &= \trace \left(e^{-\beta \mathcal{H}}\right).
 \end{align*}The free energy is then given by:
 \begin{align*}
     \mathcal{F} = -k_b T\ln(Z).
-\end{align*}The correlation function, $G(S_1, S_2)$ can be written in the following manner:
+\end{align*}Looking at the partial derivative of $\mathcal{F}$ with respect to $H_1$ and $H_2$:
+\begin{align*}
+    \frac{\partial^2 \mathcal{F}}{\partial H_2 \partial H_1} &= -k_bT\frac{\partial}{\partial H_2}\left(\frac{\beta}{Z}\trace\left(S_1e^{-\beta\mathcal{H}}\right)\right)\\
+    &= \beta\left[-\frac{1}{Z^2}\trace\left(S_2e^{-\beta \mathcal{H}}\right)\trace\left(S_1e^{-\beta\mathcal{H}}\right) + \frac{1}{Z}\trace\left(S_1S_2e^{-\beta\mathcal{H}}\right)\right].
+\end{align*}One, then also looks at the average of $S_1$ and $S_2$ as well as $\average{S_1S_2}$:
+\begin{align*}
+    \average{S_1} &= \frac{1}{Z}\trace\left(S_1e^{-\beta\mathcal{H}}\right),\\
+    \average{S_2} &= \frac{1}{Z}\trace\left(S_2e^{-\beta\mathcal{H}}\right),\\
+    \average{S_1S_2} &= \frac{1}{Z}\trace\left(S_1S_2e^{-\beta\mathcal{H}}\right).
+\end{align*}Thus, one can see that the connected correlation function can be written as the second derivative of the free energy:
+\begin{align*}
+    G(S_1, S_2) &= \frac{1}{Z}\trace\left(S_1S_2e^{-\beta\mathcal{H}}\right) - \frac{1}{Z^2}\trace\left(S_1e^{-\beta\mathcal{H}}\right)\trace\left(S_2e^{-\beta\mathcal{H}}\right)\\
+    &= \frac{1}{\beta}\frac{\partial^2\mathcal{F}}{\partial H_1\partial H_2}.
+\end{align*}
+\begin{comment}
 \begin{align}
     G(S_1, S_2) &= \frac{1}{Z}\sum_{S_1}\sum_{S_2}S_1S_2e^{\beta \mathcal{H}} - \average{S_1}\average{S_2}.\label{eq: corr}
 \end{align}We compute the two partial derivatives of $\mathcal{F}$ with respect to $H_1$ and $H_2$:
@@ -289,6 +303,7 @@ Show that, if we change the Hamiltonian of the system so that:
 \begin{align*}
     G(S_1, S_2) &= \frac{1}{\beta}\frac{\partial^2\mathcal{F}}{\partial H_1\partial H_2} - \average{S_1}\average{S_2}.
 \end{align*}And thus one has proved that the connected correlation function can be written as the second derivative of the free energy.
+\end{comment}
 
 \begin{comment}
 If we instead have the above Hamiltonian, we compute the partition function:
