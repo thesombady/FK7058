@@ -1,0 +1,226 @@
+\documentclass[a4paper]{article}
+
+% --- Packages ---
+
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage{mdframed}
+\usepackage{systeme,}
+\usepackage{lipsum}
+\usepackage{relsize}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{shapes.geometric}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=newest}%1.7}
+\usepackage{harpoon}%
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{authblk}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{chngcntr}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{commath}
+\usepackage{hyperref}%Might remove, adds link to each reference
+\usepackage{url}
+\usepackage{calligra}
+\usepackage{pgf}
+
+% --- Bibtex ---
+
+%\usepackage[backend = biblar,]{bibtex}
+
+%\addbibliografy(ref.bib)
+
+% --- Commands --- 
+
+\newcommand{\w}{\omega}
+\newcommand{\trace}{\text{Tr}}
+\newcommand{\grad}{\mathbf{\nabla}}
+%\newcommand{\crr}{\mathfrak{r}}
+\newcommand{\laplace}{\nabla^2}
+\newcommand{\newparagraph}{\vspace{.5cm}\noindent}
+
+% --- Math character commands ---
+
+\newcommand{\curl}[1]{\mathbf{\nabla}\times \mathbf{#1}}
+\newcommand{\dive}[1]{\mathbf{\nabla}\cdot \mathbf{#1}}
+\newcommand{\res}[2]{\text{Res}(#1,#2)}
+\newcommand{\fpartial}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\rot}[3]{\begin{vmatrix}\hat{x}&\hat{y}&\hat{z}\\\partial_x&\partial_y&\partial_z\\#1&#2&#3 \end{vmatrix}}
+\newcommand{\average}[1]{\langle #1 \rangle}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+
+
+%  --- Special character commands ---
+
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+\newcommand{\crr}{\mathcalligra{r}\,}
+\newcommand{\boldscriptr}{\pmb{\mathcalligra{r}}\,}
+
+
+\title{Handin 4}
+\author{Author : Andreas Evensen}
+\date{Date: \today}
+
+% --- Code ---
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\maketitle
+
+\subsection*{Question 1}
+Find $p_c$, $v_c$ and $T_c$ for the Van-der Waals fluid.
+
+\newparagraph
+\textbf{Answer: }Given the Van-der Waals equation:
+\begin{align}
+    p = \frac{k_bT}{v-b} - \frac{a}{v^2},\label{eq: van equation}
+\end{align}one rewrites this expression in the following manner:
+\begin{align*}
+    v^3 -\left(b + \frac{k_bT}{p}\right)v^2 + \frac{a}{p}v -\frac{ab}{p} = 0.
+\end{align*}At a critical point, all the critical constants are equal, and thus the above equation must have the form: $(v-v_c)^3 = 0$.
+Matching the terms to the new equation gives:
+\begin{align*}
+   3v_c = b + \frac{k_bT_c}{p_c},\quad 3v_c^2 = \frac{a}{p_c},\quad v_c^3 = \frac{ab}{p_c}.
+\end{align*}Rewriting the last equation gives: $p_c = ab / v_c^3$, and substituting this into the second equation gives: $v_c = 3b$.
+Substituting this into the first equation gives: $3v_c = b + \frac{k_bT_c}{p_c}$, and thus $T_ck_b = \frac{8a}{27b}$.
+Thus, the critical constants are given by:
+\begin{align*}
+    p_c = \frac{a}{27b^2}, \quad v_c = 3b, \quad T_ck_b = \frac{8a}{27b}.
+\end{align*}
+
+\subsection*{Question 2}
+Rewrite the Van-der Waals equation in terms of reduced variables, $\tau = T / T_c$, $\nu = v / v_c$ and $\pi = p / p_c$.
+
+\newparagraph
+\textbf{Answer: }Firstly, Van-der Waals equation is give by:
+\begin{align*}
+    p = \frac{k_bT}{v-b} - \frac{a}{v^2},
+\end{align*}we rewrite the reduced variables, such that the equation becomes:
+\begin{align*}
+    \pi p_c = \frac{k_b\tau T_c}{\nu v_c - b} - \frac{a}{\nu^2 v_c^2}.
+\end{align*}The critical constants are then given by:
+\begin{align*}
+    p_c = \frac{a}{27b^2}, \quad v_c = 3b, \quad T_ck_b = \frac{8a}{27b},
+\end{align*}and substituting these into the equation gives:
+\begin{align*}
+    \pi \frac{a}{27b^2} &= \frac{8a}{27b}\frac{\tau}{\nu 3b - b} - \frac{a}{\nu^2 (3b)^2}\\
+    \implies \pi &= \frac{8\tau}{3\nu - 1} - \frac{3}{\nu^2}.
+\end{align*}
+
+
+\subsection*{Question 3}
+Expand the above equation in the vicinity of $\tau = \nu = \pi = 1$.
+
+\newparagraph
+\textbf{Answer: }We rewrite the equation in terms of new variables $t = \tau - 1$ and $\phi = \nu - 1$,
+\begin{align*}
+    \pi(\phi, t) &= \frac{8(t + 1)}{3(\phi + 1) - 1} - \frac{3}{(\phi + 1)^2}.
+\end{align*}Taylor expanding around the point $(\phi, t) = (1,1)$ gives:
+\begin{align*}
+    \pi(\phi, t) &= \frac{4(t + 1)}{1 + \frac{3}{2}\phi} - \frac{3}{(\phi + 1)^2}
+\end{align*}
+\begin{align}
+    &= 1 + 4t - 6\phi t -\frac{3}{2}t^3 + HOT.\label{eq: expansion}
+\end{align}The higher order terms are not significant when close to the critical points.
+
+%&\approx\pi(0,0) \frac{\partial \pi}{\partial \phi}\Big|_{\phi = 1, t = 0}\phi + \frac{\partial \pi}{\partial t}\Big|_{\phi = 0, t = 1}t + \frac{\partial \pi^2}{\partial \phi^2}_{1,0}\phi^2 + \frac{\partial \pi^2}{\partial t^2}_{0,1}t^2 + HOT\\
+
+
+
+\subsection*{Question 4}
+Using the above expression obtain the behavior of $v_g - v_l$ close to $T = T_c$. Here, $v_g$ is the volume per particle when all gas, and $v_l$ is the volume per particle when all liquid.
+
+\newparagraph
+\textbf{Answer: }Using the expressions obtain above, we can say that $v$ in itself is equivalent to $t$, thus we seek $t_g$ and $t_l$.
+\begin{align*}
+    dp &= p_c\left[-6t d\phi - \frac{9}{2}\phi^2d\phi\right]\\
+    \implies 0 &= \int_{t_l}^{t_g} t\left(-6t - \frac{9}{2}\phi^2\right)dt.
+\end{align*}Using the fact that $t$ is an odd function, we see that $\phi_g = -\phi_l$, and using eq \eqref{eq: expansion}, we have that:
+\begin{align*}
+    \pi &= 1 + 4t - 6\phi_l t -\frac{3}{2}\phi_l^3\\
+    &= 1 + 4t + 6\phi_g t +\frac{3}{2}\phi_g^3.
+\end{align*}Subtracting the equations gives:
+\begin{align*}
+    \abs{t_g - t_l} = 2\cdot \sqrt{-\phi} = 2\sqrt{\tau - 1} = 2\sqrt{\frac{T_c-T}{T_c}}. 
+\end{align*}
+
+
+\subsection*{Question 5}
+Calculate the dependence off $\pi$ on $V$ on the critical isotherm.
+
+\newparagraph
+\textbf{Answer: }The critical isotherm is given by $\phi = 0$, and thus we have that from eq \eqref{eq: expansion}:
+\begin{align*}
+    \pi &= 1 - \frac{3}{2}t^3.
+\end{align*}Utilizing the fact that $t = \frac{V - V_c}{V_c}$, we have that:
+\begin{align*}
+    \pi  =1  -\frac{3}{2}t^3 =1 -\frac{3}{2}\left(\frac{V - V_c}{V_c}\right)^3.
+\end{align*}Thus, on the critical isotherm, $\pi$ has a cubic dependence on $V$. We can also do the inverse, thus we have that:
+\begin{align*}
+    t^3 = 1 - \pi \implies t = \sqrt[3]{1 - \pi} = \frac{V - V_c}{V_c}.
+\end{align*}Thus, the dependence off $\pi$ on $V$ is given by:
+\begin{align*}
+    V = V_c + V_c\sqrt[3]{1 - \pi}.
+\end{align*}
+
+
+\subsection*{Question 6}
+How does the latent heat of the transform scale close to $T_c$.
+
+\newparagraph
+\textbf{Answer: }The latent heat $\Delta S$ is defined by:
+\begin{align*}
+    \Delta S = T(v_g - v_l)\frac{dp}{dT}.
+\end{align*}In the previous task, when close to the critical temperature, we found that $v_g - v_l \propto \sqrt{\frac{T_c - T}{T_c}}$, and thus we have that:
+\begin{align*}
+    \Delta S = T \cdot 2 \sqrt{\frac{T_c - T}{T_c}}\frac{dp}{dT}.
+\end{align*}From eq \eqref{eq: van equation}, we compute $\frac{dp}{dT}$:
+\begin{align*}
+    \frac{dp}{dT} = \frac{d}{dT}\left(\frac{k_bT}{v - b} - \frac{a}{v^2}\right) = \frac{k_b}{v - b}.
+\end{align*}Therefore, the latent heat $\Delta S$ is given by, when in the vicinity of the critical temperature:
+\begin{align*}
+    \Delta S = 2k_bT\sqrt{\frac{T_c - T}{T_c}}\frac{1}{v - b}.
+\end{align*}
+
+\end{document}
+ 
