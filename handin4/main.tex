@@ -155,33 +155,40 @@ Expand the above equation in the vicinity of $\tau = \nu = \pi = 1$.
 \textbf{Answer: }We rewrite the equation in terms of new variables $t = \tau - 1$ and $\phi = \nu - 1$,
 \begin{align*}
     \pi(\phi, t) &= \frac{8(t + 1)}{3(\phi + 1) - 1} - \frac{3}{(\phi + 1)^2}.
-\end{align*}Taylor expanding around the point $(\phi, t) = (1,1)$ gives:
-\begin{align*}
-    \pi(\phi, t) &= \frac{4(t + 1)}{1 + \frac{3}{2}\phi} - \frac{3}{(\phi + 1)^2}
-\end{align*}
+\end{align*}Taylor expanding around the point $(\phi, t) = (0,0)$ gives:
 \begin{align}
-    &= 1 + 4t - 6\phi t -\frac{3}{2}t^3 + HOT.\label{eq: expansion}
+    \pi(\phi, t) &= \frac{8(t + 1)}{3\phi + 2} - \frac{3}{(\phi + 1)^2}\nonumber\\
+    &= \pi(0,0) + \frac{\partial \pi}{\partial t}\Big|_{\phi = 0}\\
+    &= 1 + 4t - 6\phi t -\frac{3}{2}\phi^3 + HOT.\label{eq: expansion}
 \end{align}The higher order terms are not significant when close to the critical points.
 
 %&\approx\pi(0,0) \frac{\partial \pi}{\partial \phi}\Big|_{\phi = 1, t = 0}\phi + \frac{\partial \pi}{\partial t}\Big|_{\phi = 0, t = 1}t + \frac{\partial \pi^2}{\partial \phi^2}_{1,0}\phi^2 + \frac{\partial \pi^2}{\partial t^2}_{0,1}t^2 + HOT\\
-
-
 
 \subsection*{Question 4}
 Using the above expression obtain the behavior of $v_g - v_l$ close to $T = T_c$. Here, $v_g$ is the volume per particle when all gas, and $v_l$ is the volume per particle when all liquid.
 
 \newparagraph
-\textbf{Answer: }Using the expressions obtain above, we can say that $v$ in itself is equivalent to $t$, thus we seek $t_g$ and $t_l$.
+\textbf{Answer: }Using the expressions obtain above, we can say that $v$ in itself is equivalent to $\phi$, thus we seek $\phi_g$ and $\phi_l$.
 \begin{align*}
     dp &= p_c\left[-6t d\phi - \frac{9}{2}\phi^2d\phi\right]\\
-    \implies 0 &= \int_{t_l}^{t_g} t\left(-6t - \frac{9}{2}\phi^2\right)dt.
+    \implies 0 &= \int_{\phi_l}^{\phi_g} \phi\left(-6t - \frac{9}{2}\phi^2\right)d\phi.
 \end{align*}Using the fact that $t$ is an odd function, we see that $\phi_g = -\phi_l$, and using eq \eqref{eq: expansion}, we have that:
 \begin{align*}
-    \pi &= 1 + 4t - 6\phi_l t -\frac{3}{2}\phi_l^3\\
-    &= 1 + 4t + 6\phi_g t +\frac{3}{2}\phi_g^3.
-\end{align*}Subtracting the equations gives:
+    \pi &= 1 + 4t - 6\phi_g t -\frac{3}{2}\phi_g^3\\
+    &= 1 + 4t - 6\phi_l t -\frac{3}{2}\phi_l^3.
+\end{align*}Using the fact that $\phi_g = -\phi_l$, we obtain the two equations:
 \begin{align*}
-    \abs{t_g - t_l} = 2\cdot \sqrt{-\phi} = 2\sqrt{\tau - 1} = 2\sqrt{\frac{T_c-T}{T_c}}. 
+    \pi &= 1 + 4t - 6\phi_g t -\frac{3}{2}\phi_g^3\\
+    &= 1 + 4t + 6\phi_g t +\frac{3}{2}\phi_g^3.
+\end{align*}Subtracting the two equations gives:
+\begin{align*}
+    0 =12 \phi_g t + 3 \phi_g^3.
+\end{align*}Assuming that $\phi_g\neq 0$, we divide by $\phi_g$: and thus obtain:
+\begin{align*}
+    \phi_g = 2\sqrt{-t}.
+\end{align*}Since $\phi_g = -\phi_l$, we have that:
+\begin{align*}
+    \abs{\phi_g - \phi_l} = 2\cdot \sqrt{-t} + 2\sqrt{-t} = 4\sqrt{1 - \tau} = 4\sqrt{\frac{T_c-T}{T_c}}. 
 \end{align*}
 
 
@@ -189,15 +196,15 @@ Using the above expression obtain the behavior of $v_g - v_l$ close to $T = T_c$
 Calculate the dependence off $\pi$ on $V$ on the critical isotherm.
 
 \newparagraph
-\textbf{Answer: }The critical isotherm is given by $\phi = 0$, and thus we have that from eq \eqref{eq: expansion}:
+\textbf{Answer: }The critical isotherm is given by $t = 0$, and thus we have that from eq \eqref{eq: expansion}:
 \begin{align*}
-    \pi &= 1 - \frac{3}{2}t^3.
-\end{align*}Utilizing the fact that $t = \frac{V - V_c}{V_c}$, we have that:
+    \pi &= 1 - \frac{3}{2}\phi^3.
+\end{align*}Utilizing the fact that $\phi = \frac{V - V_c}{V_c}$, we have that:
 \begin{align*}
-    \pi  =1  -\frac{3}{2}t^3 =1 -\frac{3}{2}\left(\frac{V - V_c}{V_c}\right)^3.
+    \pi  =1  -\frac{3}{2}\phi^3 =1 -\frac{3}{2}\left(\frac{V - V_c}{V_c}\right)^3.
 \end{align*}Thus, on the critical isotherm, $\pi$ has a cubic dependence on $V$. We can also do the inverse, thus we have that:
 \begin{align*}
-    t^3 = 1 - \pi \implies t = \sqrt[3]{1 - \pi} = \frac{V - V_c}{V_c}.
+    \phi^3 = 1 - \pi \implies \phi = \sqrt[3]{1 - \pi} = \frac{V - V_c}{V_c}.
 \end{align*}Thus, the dependence off $\pi$ on $V$ is given by:
 \begin{align*}
     V = V_c + V_c\sqrt[3]{1 - \pi}.
@@ -213,13 +220,13 @@ How does the latent heat of the transform scale close to $T_c$.
     \Delta S = T(v_g - v_l)\frac{dp}{dT}.
 \end{align*}In the previous task, when close to the critical temperature, we found that $v_g - v_l \propto \sqrt{\frac{T_c - T}{T_c}}$, and thus we have that:
 \begin{align*}
-    \Delta S = T \cdot 2 \sqrt{\frac{T_c - T}{T_c}}\frac{dp}{dT}.
+    \Delta S = T \cdot 4 \sqrt{\frac{T_c - T}{T_c}}\frac{dp}{dT}.
 \end{align*}From eq \eqref{eq: van equation}, we compute $\frac{dp}{dT}$:
 \begin{align*}
     \frac{dp}{dT} = \frac{d}{dT}\left(\frac{k_bT}{v - b} - \frac{a}{v^2}\right) = \frac{k_b}{v - b}.
 \end{align*}Therefore, the latent heat $\Delta S$ is given by, when in the vicinity of the critical temperature:
 \begin{align*}
-    \Delta S = 2k_bT\sqrt{\frac{T_c - T}{T_c}}\frac{1}{v - b}.
+    \Delta S = 4k_bT\sqrt{\frac{T_c - T}{T_c}}\frac{1}{v - b}.
 \end{align*}
 
 \end{document}
