@@ -1,0 +1,214 @@
+\documentclass[a4paper]{article}
+
+% --- Packages ---
+
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage{mdframed}
+\usepackage{systeme,}
+\usepackage{lipsum}
+\usepackage{relsize}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{shapes.geometric}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=newest}%1.7}
+\usepackage{harpoon}%
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{authblk}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{chngcntr}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{commath}
+\usepackage{hyperref}%Might remove, adds link to each reference
+\usepackage{url}
+\usepackage{calligra}
+\usepackage{pgf}
+
+% --- Bibtex ---
+
+%\usepackage[backend = biblar,]{bibtex}
+
+%\addbibliografy(ref.bib)
+
+% --- Commands --- 
+
+\newcommand{\w}{\omega}
+\newcommand{\trace}{\text{Tr}}
+\newcommand{\grad}{\mathbf{\nabla}}
+%\newcommand{\crr}{\mathfrak{r}}
+\newcommand{\laplace}{\nabla^2}
+\newcommand{\newparagraph}{\vspace{.5cm}\noindent}
+
+% --- Math character commands ---
+
+\newcommand{\curl}[1]{\mathbf{\nabla}\times \mathbf{#1}}
+\newcommand{\dive}[1]{\mathbf{\nabla}\cdot \mathbf{#1}}
+\newcommand{\res}[2]{\text{Res}(#1,#2)}
+\newcommand{\fpartial}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\rot}[3]{\begin{vmatrix}\hat{x}&\hat{y}&\hat{z}\\\partial_x&\partial_y&\partial_z\\#1&#2&#3 \end{vmatrix}}
+\newcommand{\average}[1]{\langle #1 \rangle}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+
+
+%  --- Special character commands ---
+
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+\newcommand{\crr}{\mathcalligra{r}\,}
+\newcommand{\boldscriptr}{\pmb{\mathcalligra{r}}\,}
+
+
+\title{Handin 5 :  FK7058}
+\author{Author : Andreas Evensen}
+\date{Date: \today}
+
+% --- Code ---
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\maketitle
+
+\begin{align*}
+    \mathcal{H} = -J \sum_{\average{i,j}}S_iS_j - \Delta \sum_{i=1}^NS_i^2 - H \sum_{i = 1}^NS_i
+\end{align*}
+
+\subsection*{Problem 1}
+Make the usual mean-field approximation to convert the term with nearest-neighbour interactions to a term over single spins and write the mean-field Hamiltonian.
+
+\newparagraph
+\textbf{Answer:} We rewrite the above Hamiltonian in the following manner:
+\begin{align*}
+    \mathcal{H} &= -J \sum_{\average{i,j}}S_iS_j - \Delta \sum_{i=1}^NS_i^2 - H \sum_{i = 1}^NS_i\\
+    &= -\sum_{\average{i,j}}J_{i,j}\average{S_j}S_i - \Delta \sum_{i=1}^NS_i^2 - H \sum_{i = 1}^NS_i\\
+    &= -\sum_i (H + \sum_{j}\average{S_j})S_i - \Delta S_i^2\\
+    &= -\sum_i S_i(h_i + \Delta S_i),
+\end{align*}where $h_i = H - J\sum_j^{2d} \average{S_j}$.
+
+
+\subsection*{Problem 2}
+Determine a self-consistent equation for the magnetization $M$.
+
+\newparagraph
+\textbf{Answer:} In order to find the self-consistent equation for the magnetization, one has to find the partition function:
+\begin{align*}
+    Z &= \sum_{\{S_j\}}e^{-\beta\mathcal{H}}= \sum_{\{S_j\}} e^{\beta\sum_i S_i(h_i + \Delta S_i)}\\
+    &= \sum_{\{S_j\}} \prod_{i = 1}^N \exp\left[\beta S_i(h_i + \Delta S_i)\right]=  \prod_{i = 1}^N \sum_{\{S_j\}}\exp\left[\beta S_i(h_i + \Delta S_i)\right]\\
+    &= \prod_{i = 1}^N \left(\exp\left[\beta( h_i + \Delta)\right]+\exp\left[-\beta h_i + \beta\Delta\right] + 1\right)\\
+    &= \prod_{i = 1}^N 2e^{\beta \Delta }\left(\cosh(\beta h_i) + \frac{e^{-\beta \Delta}}{2}\right)= \left[2e^{\beta \Delta}\left(\cosh(\beta (H + 2dJM))+\frac{e^{-\beta \Delta}}{2}\right)\right]^N.
+\end{align*}From this, one can compute the free energy as:
+\begin{align*}
+    \mathcal{F} &= -k_bT\ln(Z)\\
+    &= -k_bTN\ln\left[2e^{\beta \Delta}\left(\cosh(\beta (H + 2dJM))+\frac{e^{-\beta \Delta}}{2}\right)\right].
+\end{align*}The magnetization is thus given by:
+\begin{align*}
+    M &= - \frac{1}{N}\frac{\partial \mathcal{F}}{\partial H}\\
+    &= \frac{\sinh(\beta (H + 2dJM))}{\cosh(\beta (H + 2dJM)) + \frac{e^{-\beta \Delta}}{2}}.
+\end{align*}
+
+
+\subsection*{Problem 3}
+In all that follows we put $H = 0$. From the above equation obtain an equation for the critical temperature at which the Blume-Chapel models undergoes a continuous phase transition.
+(Hint: Keep only the highest order term in both the numerator and denominator of the self-consistent equation! You will get a transcendental equation for the critical temperature.)
+
+\newparagraph
+\textbf{Answer:} If $H = 0$, we get the following magnetization:
+\begin{align*}
+    M&= \frac{\sinh(\beta 2dJM)}{\cosh(\beta 2dJM) + \frac{e^{-\beta \Delta}}{2}} = f(M, \beta)\\
+\end{align*}Differentiating with respect to $M$ gives:
+\begin{align}
+    \fpartial{f}{M} &= \frac{\beta 2 d J\cosh\left(\beta 2 d J M \right)}{\cosh\left(\beta 2 d J M\right) + \frac{e^{-\beta \Delta}}{2}} - \frac{\beta 2 d J\sinh^2\left(\beta 2 d J M\right)}{\left(\cosh\left(\beta 2 d J M\right) + \frac{e^{-\beta \Delta}}{2}\right)^2}\nonumber\\
+    \fpartial{f}{M}\Big|_{M= 0} &= \frac{\beta 2 d J}{1 + \frac{e^{-\beta \Delta}}{2}} = 1\label{eq: Critical temperature derivation}.
+\end{align}Letting $\beta = \frac{1}{k_bT_c}$, by solving \eqref{eq: Critical temperature derivation} for $T_c$, we get the critical temperature:
+\begin{align*}
+    k_bT_c &= \frac{2d J}{1 + \frac{e^{-\frac{\Delta}{k_bT_c}}}{2}}.
+\end{align*}
+
+
+\subsection*{Problem 4}
+Taylor-expand the self-consistent equation keeping terms up to $M^5$ and from this construct a Landau free energy.
+
+\newparagraph
+\textbf{Answer:} Using the self-consistent equation, with $H = 0$, we rewrite the equation as follows:
+\begin{align*}
+    f(M) = M\cdot\left(\cosh\left(\frac{2dJM}{k_bT}\right) + \frac{e^{-\frac{\Delta}{k_bT}}}{2}\right) = \sinh\left(\frac{2dJM}{k_bT}\right) = Q(m).
+\end{align*}From this, we Taylor-expand each side of the equation: with five terms:
+\begin{align*}
+    \text{LHS:}\quad & f(0) + f'(0)\cdot M + \frac{f''(0)}{2}M^2 + \frac{f^{(3)}(0)}{6}M^3 + \frac{f^{(4)}(0)}{24}M^4 + \frac{f^{(5)}(0)}{120}M^5\\
+    &= 0 + \left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT}}\right)\cdot M + (0)\cdot M^2 + 2\left(\frac{Jd}{k_bT}\right)^2\cdot M^3 + (0)\cdot M^4 + \frac{2}{3}\left(\frac{Jd}{k_bT}\right)^4\cdot M^5\\
+    \text{RHS:}\quad & Q(0) + Q'(0)\cdot M + \frac{Q''(0)}{2}M^2 + \frac{Q^{(3)}(0)}{6}M^3 + \frac{Q^{(4)}(0)}{24}M^4 + \frac{Q^{(5)}(0)}{120}M^5\\
+    &= 0 + 2\left(\frac{Jd}{k_bT}\right)\cdot M + \left(0\right)\cdot M^2 + \frac{8}{6}\left(\frac{Jd}{k_bT}\right)^3\cdot M^3 + (0)\cdot M^4 + \frac{4}{15}\left(\frac{Jd}{k_bT}\right)^5\cdot M^5.
+\end{align*}Moving the RHS to the LHS, and then doing the following:
+\begin{align*}
+    0 &= -\left(2\frac{Jd}{k_bT} - 1 - \frac{1}{2}e^{-\frac{\Delta}{k_bT}}\right)\cdot M - \left(\frac{8}{6}\left(\frac{Jd}{k_bT}\right)^3 - 2\left(\frac{Jd}{k_bT}\right)^2\right)\cdot M^3\\
+    &-\left(\frac{4}{15}\left(\frac{Jd}{k_bT}\right)^5 - \frac{2}{3}\left(\frac{Jd}{k_bT}\right)^4\right)\cdot M^5
+\end{align*}Matching the terms with $a_i$ we get the following:
+\begin{align*}
+    \fpartial{\mathcal{L}}{M} &= a_1M + a_3M^3 + a_5M^5,\\
+    \implies \mathcal{L} &= \frac{a_1}{2}M^2 + \frac{a_3}{4}M^4 + \frac{a_5}{6}M^6.
+\end{align*}
+
+
+\subsection*{Problem 5}
+At the critical temperature you found in a previous step, show that the coefficient of the quadratic term goes to zero, signalling a continuous phase transition.
+
+\newparagraph
+\textbf{Answer:} The quadratic term:
+\begin{align*}
+    &\left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT}} - 2\frac{Jd}{k_bT}\right),\\
+    \implies &\left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT}}\right) = 2\frac{Jd}{k_bT}\\
+\end{align*}goes towards zero when entering a phase-transition when the temperature is at the critical temperature. 
+\begin{align*}
+    \left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT_c}}\right) &= 2\frac{Jd}{k_bT_c}\\
+    \left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT_c}}\right) &= 2Jd\cdot\left(\frac{1 + \frac{e^{-\frac{\Delta}{k_bT}}}{2}}{2dJ}\right)\\
+    \left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT_c}}\right) &= \left(1 + \frac{e^{-\frac{\Delta}{k_bT}}}{2}\right).
+\end{align*}They are equivilant, and thus the coefficient of the quadratic term goes to zero at the critical temperature.
+
+\subsection*{Problem 6}
+Show that there is also another temperature and a value of $\Delta$, here the coefficients of both the quadratic and quartic terms go to zero.
+Hence, having another parameter in the Hamiltonian (in this case $\Delta$) can lead to a situation where we need to the sixth-order term in the Landau free energy.
+We will see the implication of this in the next handin!
+
+\newparagraph
+\textbf{Answer:}
+
+\end{document}
+ 
