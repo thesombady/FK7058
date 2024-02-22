@@ -200,7 +200,7 @@ At the critical temperature you found in a previous step, show that the coeffici
     \left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT_c}}\right) &= 2\frac{Jd}{k_bT_c}\\
     \left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT_c}}\right) &= 2Jd\cdot\left(\frac{1 + \frac{e^{-\frac{\Delta}{k_bT}}}{2}}{2dJ}\right)\\
     \left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT_c}}\right) &= \left(1 + \frac{e^{-\frac{\Delta}{k_bT}}}{2}\right).
-\end{align*}They are equivilant, and thus the coefficient of the quadratic term goes to zero at the critical temperature.
+\end{align*}They are equivalent, and thus the coefficient of the quadratic term goes to zero at the critical temperature.
 
 \subsection*{Problem 6}
 Show that there is also another temperature and a value of $\Delta$, here the coefficients of both the quadratic and quartic terms go to zero.
@@ -208,7 +208,22 @@ Hence, having another parameter in the Hamiltonian (in this case $\Delta$) can l
 We will see the implication of this in the next handin!
 
 \newparagraph
-\textbf{Answer:}
+\textbf{Answer:} We begin by looking at $a_3$, which is the quartic term. If $a_3$ is zero, then we have the following:
+\begin{align*}
+    \frac{8}{6}\left(\frac{Jd}{k_bT}\right)^3 &=  2\left(\frac{Jd}{k_bT}\right)^2\\
+    \frac{4}{6} \frac{Jd}{k_bT} &= 1\\
+    \frac{2}{3} \frac{Jd}{k_bT} &= 1\\
+    \frac{1}{3}\frac{Jz}{k_bT} &= 1.
+\end{align*} We use this result in the quadratic term:
+\begin{align*}
+    &\left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT}}\right) = 2\frac{Jd}{k_bT}\\
+    &\left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT}}\right) = \frac{Jz}{k_bT}\\
+    &\left(1 + \frac{1}{2}e^{-\frac{\Delta}{k_bT}}\right) = 3\\
+    \implies& \frac{1}{2}e^{-\frac{\Delta}{k_bT}} = 2\\
+    &e^{-\frac{\Delta}{k_bT}} = 4\\
+    &-\frac{\Delta}{k_bT} = \ln(4)\\
+    &\Delta = -k_bT\ln(4) = -\frac{Jz}{3}\ln(4)
+\end{align*}
 
 \end{document}
  
