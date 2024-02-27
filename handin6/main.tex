@@ -1,0 +1,175 @@
+\documentclass[a4paper]{article}
+
+% --- Packages ---
+
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage{mdframed}
+\usepackage{systeme,}
+\usepackage{lipsum}
+\usepackage{relsize}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{shapes.geometric}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=newest}%1.7}
+\usepackage{harpoon}%
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{authblk}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{chngcntr}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{commath}
+\usepackage{hyperref}%Might remove, adds link to each reference
+\usepackage{url}
+\usepackage{calligra}
+\usepackage{pgf}
+
+% --- Bibtex ---
+
+%\usepackage[backend = biblar,]{bibtex}
+
+%\addbibliografy(ref.bib)
+
+% --- Commands --- 
+
+\newcommand{\w}{\omega}
+\newcommand{\trace}{\text{Tr}}
+\newcommand{\grad}{\mathbf{\nabla}}
+%\newcommand{\crr}{\mathfrak{r}}
+\newcommand{\laplace}{\nabla^2}
+\newcommand{\newparagraph}{\vspace{.5cm}\noindent}
+
+% --- Math character commands ---
+
+\newcommand{\curl}[1]{\mathbf{\nabla}\times \mathbf{#1}}
+\newcommand{\dive}[1]{\mathbf{\nabla}\cdot \mathbf{#1}}
+\newcommand{\res}[2]{\text{Res}(#1,#2)}
+\newcommand{\fpartial}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\rot}[3]{\begin{vmatrix}\hat{x}&\hat{y}&\hat{z}\\\partial_x&\partial_y&\partial_z\\#1&#2&#3 \end{vmatrix}}
+\newcommand{\average}[1]{\langle #1 \rangle}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+
+
+%  --- Special character commands ---
+
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+\newcommand{\crr}{\mathcalligra{r}\,}
+\newcommand{\boldscriptr}{\pmb{\mathcalligra{r}}\,}
+
+
+\title{Handin 6}
+\author{Author : Andreas Evensen}
+\date{Date: \today}
+
+% --- Code ---
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\maketitle
+
+\noindent
+Consider the free energy density:
+\begin{align*}
+    \mathcal{L} &= \frac{1}{2}a\eta^2 + \frac{1}{4}b\eta^4 + \frac{1}{6}c\eta^6 - h\eta,
+\end{align*}where $ c> 0 $, $a$ and $b$ are both linearly proportional to the pressure $p$ and temperature $T$ near the critical point, $(T_c, p_c)$.
+\begin{align*}
+    a &= a_1t + a_2p,\quad b = b_1t + b_2p.
+\end{align*}Here, $t$ and $p$ are the reduced temperature and pressure, respectively.
+As $T$ and $p$ are varied both $a$ and $b$ can be made to vanish or change sign.
+Such a system exhibits a tricritical point. An example of this is $He^3$ and $He^4$.
+In this question we will calculate the phase diagram in the $a-b$ plane for $h = 0$, using Landau theory.
+
+\section*{a)}
+Consider the case $a<0$. Find the extrema for the Landau free energy, and study their stability. Hence, show:
+\begin{align*}
+    \average{\eta}^2=\eta_s^2 = \frac{-b + \sqrt{b^2 - 4ac}}{2c}.
+\end{align*}
+
+\newparagraph
+\textbf{Answer: } Since $h = 0$, we're left with the following Landau free energy density (LFD):
+\begin{align}
+    \mathcal{L} &= \frac{1}{2}a\eta^2 + \frac{1}{4}b\eta^4 + \frac{1}{6}c\eta^6. \label{eq: LFD}
+\end{align}
+
+
+\section*{b)}
+Now consider $a>0$, $b>0$. How does $\eta_s$ behave in this region?
+
+\newparagraph
+\textbf{Answer: }
+\section*{c)}
+Lastly, consider $a>0$, $b<0$. What happens here?
+
+\newparagraph
+\textbf{Answer: }
+
+
+\section*{d)}
+Now sketch the phase diagram in the $a-b$ plane, indicating the order of any phase transition that you have found, and the position of the phase boundaries.
+Sketch the form of the Landau free energy in each region.
+The point $(a,b) = (0,0)$ is the tricritical point.
+Can you suggest why? \textit{Hint:} Consider $h \neq 0$.
+
+
+\newparagraph
+\textbf{Answer: }
+
+
+\section*{e)}
+Calculate the thermodynamic critical exponent, by approaching the tricritical point along the line $b = 0$.
+What do you expect $\nu$ to be?
+
+\newparagraph
+\textbf{Answer: }
+
+
+\section*{f)}
+Show that for small but positive $b$, there is a crossover from the tricritical behavior which you have found to ordinary critical behavior when $b^2\sim - ac$.
+
+\newparagraph
+\textbf{Answer: }
+
+
+
+\end{document}
+ 
